@@ -21,6 +21,10 @@ on:
         description: "Board: odroidn2 / lepotato"
         required: false
         default: "odroidn2"
+      set_desktop:
+        description: "Set desktop environment: xfce / budgie / cinnamon / dde / enlightenment / gnome3 / lxde / mate"
+        required: false
+        default: "xfce"
       armbian_soc:
         description: "Set Amlogic SoC."
         required: false
@@ -37,10 +41,7 @@ on:
         description: "Set armbian rootfs type."
         required: false
         default: "ext4"
-      set_desktop:
-        description: "Choose the desktop environment. ( `xfce` | `budgie` | `cinnamon` | `dde` | `enlightenment` | `gnome3` | `lxde` | `mate` )"
-        required: true
-        default: "xfce"
+
   #schedule:
     #- cron: "0 17 * * 0"
 
