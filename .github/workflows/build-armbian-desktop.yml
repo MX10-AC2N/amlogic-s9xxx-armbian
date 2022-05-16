@@ -88,6 +88,12 @@ jobs:
               set_board="lepotato"
           fi
           echo "ARMBIAN_BOARD=${set_board}" >> $GITHUB_ENV
+          ARR_DESKTOP=("xfce" "budgie" "cinnamon" "dde" "enlightenment" "gnome3" "lxde" "mate")
+          set-desktop="${{ github.event.inputs.set_desktop }}"
+          if [[ -z "${set_desktop}" || -z "$(echo "${ARR_DESKTOP[@]}" | grep -w "${set_desktop}")" ]]; then
+              set_desktop="xfce"
+          fi
+          echo "ARMBIAN_DESKTOP=${set_desktop}" >> $GITHUB_ENV
       - name: Download source code
         id: down
         run: |
@@ -98,7 +104,7 @@ jobs:
           cd build/
           sudo chmod +x compile.sh
           sudo ./compile.sh BRANCH=${{ env.ARMBIAN_BRANCH }} RELEASE=${{ env.ARMBIAN_RELEASE }} BOARD=${{ env.ARMBIAN_BOARD }} \
-                            BUILD_MINIMAL=no BUILD_DESKTOP=yes DESKTOP_ENVIRONMENT=${set_desktop} DESKTOP_ENVIRONMENT_CONFIG_NAME=config_basic HOST=armbian KERNEL_ONLY=no KERNEL_CONFIGURE=no \
+                            BUILD_MINIMAL=no BUILD_DESKTOP=yes DESKTOP_ENVIRONMENT=${{ env.ARMBIAN_DESKTOP }} DESKTOP_ENVIRONMENT_CONFIG_NAME=config_basic HOST=armbian KERNEL_ONLY=no KERNEL_CONFIGURE=no \
                             CLEAN_LEVEL=make,debs COMPRESS_OUTPUTIMAGE=sha
           echo "::set-output name=status::success"
       - name: Rebuild Armbian for Amlogic s9xxx
