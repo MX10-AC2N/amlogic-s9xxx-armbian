@@ -89,7 +89,7 @@ jobs:
           fi
           echo "ARMBIAN_BOARD=${set_board}" >> $GITHUB_ENV
           ARR_DESKTOP=("xfce" "budgie" "cinnamon" "dde" "enlightenment" "gnome3" "lxde" "mate")
-          set-desktop="${{ github.event.inputs.set_desktop }}"
+          set_desktop="${{ github.event.inputs.set_desktop }}"
           if [[ -z "${set_desktop}" || -z "$(echo "${ARR_DESKTOP[@]}" | grep -w "${set_desktop}")" ]]; then
               set_desktop="xfce"
           fi
