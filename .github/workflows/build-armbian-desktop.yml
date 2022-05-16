@@ -37,6 +37,10 @@ on:
         description: "Set armbian rootfs type."
         required: false
         default: "ext4"
+      set_desktop:
+        description: "Choose the desktop environment. ( `xfce` | `budgie` | `cinnamon` | `dde` | `enlightenment` | `gnome3` | `lxde` | `mate` )"
+        required: true
+        default: "xfce"
   #schedule:
     #- cron: "0 17 * * 0"
 
@@ -93,7 +97,7 @@ jobs:
           cd build/
           sudo chmod +x compile.sh
           sudo ./compile.sh BRANCH=${{ env.ARMBIAN_BRANCH }} RELEASE=${{ env.ARMBIAN_RELEASE }} BOARD=${{ env.ARMBIAN_BOARD }} \
-                            BUILD_MINIMAL=no BUILD_DESKTOP=yes DESKTOP_ENVIRONMENT=xfce DESKTOP_ENVIRONMENT_CONFIG_NAME=config_basic HOST=armbian KERNEL_ONLY=no KERNEL_CONFIGURE=no \
+                            BUILD_MINIMAL=no BUILD_DESKTOP=yes DESKTOP_ENVIRONMENT=${set_desktop} DESKTOP_ENVIRONMENT_CONFIG_NAME=config_basic HOST=armbian KERNEL_ONLY=no KERNEL_CONFIGURE=no \
                             CLEAN_LEVEL=make,debs COMPRESS_OUTPUTIMAGE=sha
           echo "::set-output name=status::success"
       - name: Rebuild Armbian for Amlogic s9xxx
