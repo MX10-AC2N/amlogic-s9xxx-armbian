@@ -36,7 +36,7 @@ on:
       armbian_size:
         description: "Set armbian rootfs size."
         required: false
-        default: "2748"
+        default: "3584"
       armbian_fstype:
         description: "Set armbian rootfs type."
         required: false
