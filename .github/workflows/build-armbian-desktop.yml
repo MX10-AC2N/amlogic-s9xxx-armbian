@@ -127,7 +127,7 @@ jobs:
           allowUpdates: true
           token: ${{ secrets.GH_TOKEN }}
           body: |
-            This is Armbian image with ${set_dektop} desktop (basic_config) for Amlogic s9xxx tv box
+            This is Armbian image with [${set_dektop}] desktop (basic_config) for Amlogic s9xxx tv box
             * Firmware information
             Default username: root
             Default password: 1234
