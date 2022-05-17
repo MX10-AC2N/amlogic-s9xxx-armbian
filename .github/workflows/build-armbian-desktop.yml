@@ -104,7 +104,9 @@ jobs:
           cd build/
           sudo chmod +x compile.sh
           sudo ./compile.sh BRANCH=${{ env.ARMBIAN_BRANCH }} RELEASE=${{ env.ARMBIAN_RELEASE }} BOARD=${{ env.ARMBIAN_BOARD }} \
-                            BUILD_MINIMAL=no BUILD_DESKTOP=yes EXPERT=yes DESKTOP_ENVIRONMENT=${{ env.ARMBIAN_DESKTOP }} DESKTOP_ENVIRONMENT_CONFIG_NAME=config_basic HOST=armbian KERNEL_ONLY=no KERNEL_CONFIGURE=no \
+                            BUILD_MINIMAL=no BUILD_DESKTOP=yes EXPERT=yes DESKTOP_ENVIRONMENT=${{ env.ARMBIAN_DESKTOP }} \
+                            DESKTOP_ENVIRONMENT_CONFIG_NAME=config_basic DESKTOP_APPGROUPS_SELECTED='browsers chat desktop_tools editors email internet multimedia office' \
+                            HOST=armbian KERNEL_ONLY=no KERNEL_CONFIGURE=no \
                             CLEAN_LEVEL=make,debs COMPRESS_OUTPUTIMAGE=sha
           echo "::set-output name=status::success"
       - name: Rebuild Armbian for Amlogic s9xxx
