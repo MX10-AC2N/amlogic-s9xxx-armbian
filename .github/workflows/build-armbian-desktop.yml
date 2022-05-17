@@ -22,7 +22,7 @@ on:
         required: false
         default: "odroidn2"
       set_desktop:
-        description: "Set desktop environment: xfce / budgie / cinnamon / deepin / enlightenment / gnome / lxde / mate"
+        description: "Set desktop environment: xfce / budgie / cinnamon / gnome / xmonad / mate"
         required: false
         default: "xfce"
       armbian_soc:
@@ -88,7 +88,7 @@ jobs:
               set_board="lepotato"
           fi
           echo "ARMBIAN_BOARD=${set_board}" >> $GITHUB_ENV
-          ARR_DESKTOP=("xfce" "budgie" "cinnamon" "deepin" "enlightenment" "gnome" "lxde" "mate")
+          ARR_DESKTOP=("xfce" "budgie" "cinnamon" "gnome" "xnomad" "mate")
           set_desktop="${{ github.event.inputs.set_desktop }}"
           if [[ -z "${set_desktop}" || -z "$(echo "${ARR_DESKTOP[@]}" | grep -w "${set_desktop}")" ]]; then
               set_desktop="xfce"
