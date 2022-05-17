@@ -88,7 +88,7 @@ jobs:
               set_board="lepotato"
           fi
           echo "ARMBIAN_BOARD=${set_board}" >> $GITHUB_ENV
-          ARR_DESKTOP=("xfce" "budgie" "cinnamon" "gnome" "xnomad" "mate")
+          ARR_DESKTOP=("xfce" "budgie" "cinnamon" "gnome" "xmonad" "mate")
           set_desktop="${{ github.event.inputs.set_desktop }}"
           if [[ -z "${set_desktop}" || -z "$(echo "${ARR_DESKTOP[@]}" | grep -w "${set_desktop}")" ]]; then
               set_desktop="xfce"
@@ -115,7 +115,7 @@ jobs:
         with:
           build_target: armbian
           armbian_path: build/output/images/*.img
-          armbian_soc: ${{ github.event.inputs.armbian_soc }}
+          armbian_soc: ${{ github.event.inputs.armbian_soc }}_${{ github.event.inputs.set-desktop }}
           armbian_kernel: ${{ github.event.inputs.armbian_kernel }}
           armbian_size: ${{ github.event.inputs.armbian_size }}
           armbian_fstype: ${{ github.event.inputs.armbian_fstype }}
