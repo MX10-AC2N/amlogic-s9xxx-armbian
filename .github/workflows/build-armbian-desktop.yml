@@ -125,7 +125,7 @@ jobs:
         if: env.PACKAGED_STATUS == 'success' && !cancelled()
         with:
           tag: Armbian_Aml_${{ env.ARMBIAN_RELEASE }}_${{ env.ARMBIAN_DESKTOP }}_${{ env.PACKAGED_OUTPUTDATE }}
-          artifacts: ${{ env.ARMBIAN_DESKTOP }}_${{ env.PACKAGED_OUTPUTPATH }}/*
+          artifacts: ${{ env.PACKAGED_OUTPUTPATH }}/*
           allowUpdates: true
           token: ${{ secrets.GH_TOKEN }}
           body: |
