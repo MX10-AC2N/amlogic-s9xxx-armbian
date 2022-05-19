@@ -193,6 +193,7 @@ sudo apt-get install -y $(curl -fsSL https://raw.githubusercontent.com/ophub/aml
 | -v   | Version    | 指定内核 [版本分支](https://github.com/ophub/kernel/tree/main/pub) 名称，如 `-v stable` 。指定的名称须与分支目录名称相同。默认使用 `stable` 分支版本。 |
 | -s   | Size       | 对固件的 ROOTFS 分区大小进行设置，默认大小为 2748M, 固件大小必须大于 2000M. 例如： `-s 2748` |
 | -t   | RootfsType | 对固件的 ROOTFS 分区的文件系统类型进行设置，默认为 `ext4` 类型，可选项为 `ext4` 或 `btrfs` 类型。例如： `-t btrfs` |
+| -n   | CustomName | 设置固件名称中的签名部分。默认值为空。可根据需要添加签名如 `server_`，`gnome_desktop_` 或 `ophub_` 等，设置自定义签名时请勿包含空格。 |
 
 - `sudo ./rebuild -d` : 使用默认配置，对全部型号的电视盒子进行打包。
 - `sudo ./rebuild -d -b s905x3 -k 5.10.100` : 推荐使用. 使用默认配置进行相关内核打包。
@@ -208,11 +209,11 @@ sudo apt-get install -y $(curl -fsSL https://raw.githubusercontent.com/ophub/aml
 
 1. 关于 Workflows 文件的配置在 [.yml](.github/workflows/build-armbian.yml) 文件里。可以设置需要编译的盒子的 `SOC` 等参数，具体详见 `Rebuild Armbian for amlogic s9xxx` 节点。
 
-2. 全新编译：在 [Actions](https://github.com/ophub/amlogic-s9xxx-armbian/actions) 页面里选择 ***`Build armbian`*** ，根据 Armbian 官方支持的 OS 版本，可在 [RELEASE](https://docs.armbian.com/Developer-Guide_Build-Options/) 里选择 Ubuntu 系列：`focal`，或者 Debian 系列：`bullseye` / `buster` 。在 `BOARD` 里可选 `odroidn2` / `lepotato` 等。可根据需要在 `More build options` 里为 `compile.sh` 添加更多设置选项。点击 ***`Run workflow`*** 按钮即可编译。
+2. 全新编译：在 [Actions](https://github.com/ophub/amlogic-s9xxx-armbian/actions) 页面里选择 ***`Build armbian`*** ，根据 Armbian 官方支持的 OS 版本，可在 [RELEASE](https://docs.armbian.com/Developer-Guide_Build-Options/) 里选择 Ubuntu 系列：`jammy` / `focal`，或者 Debian 系列：`bullseye` / `buster` 。在 `BOARD` 里可选 `odroidn2` / `lepotato` 等。点击 ***`Run workflow`*** 按钮即可编译。
 
 3. 再次编译：如果 [Releases](https://github.com/ophub/amlogic-s9xxx-armbian/releases) 中有已经编译好的 `Armbian_.*-trunk_.*.img.gz` 文件，你只是想再次制作其他不同 soc 的盒子，可以跳过 Armbian 源文件的编译，直接进行二次制作。在 [Actions](https://github.com/ophub/amlogic-s9xxx-armbian/actions) 页面中选择  ***`Use Releases file to build armbian`*** ，点击 ***`Run workflow`*** 按钮即可二次编译。
 
-4. 使用其他方式构建 Armbian 固件。或者使用 [Armbian](https://armbian.tnahosting.net/dl/) 官方提供的 [odroidn2](https://armbian.tnahosting.net/dl/odroidn2/archive/) 等分支的固件，仅在流程控制文件 [.yml](.github/workflows/rebuild-armbian.yml) 中引入本仓库的脚本进行 Armbian 重构，适配 Amlogic S9xxx 系列盒子的使用。在 [Actions](https://github.com/ophub/amlogic-s9xxx-armbian/actions) 页面里选择 ***`Rebuild armbian`*** ，输入 Armbian 的网络下载地址如 `https://dl.armbian.com/*/Armbian_*.img.xz` ，或者在流程控制文件 [.yml](.github/workflows/rebuild-armbian.yml) 中通过 `armbian_path` 参数设定重构文件的加载路径。代码如下:
+4. 使用其他 Armbian 固件，如 Armbian 官方固件下载网站 [armbian.tnahosting.net](https://armbian.tnahosting.net/dl/) 提供的 [odroidn2](https://armbian.tnahosting.net/dl/odroidn2/archive/) 固件，仅在流程控制文件 [.yml](.github/workflows/rebuild-armbian.yml) 中引入本仓库的脚本进行 Armbian 重构，即可适配 Amlogic S9xxx 系列盒子的使用。在 [Actions](https://github.com/ophub/amlogic-s9xxx-armbian/actions) 页面里选择 ***`Rebuild armbian`*** ，输入 Armbian 的网络下载地址如 `https://dl.armbian.com/*/Armbian_*.img.xz` ，或者在流程控制文件 [.yml](.github/workflows/rebuild-armbian.yml) 中通过 `armbian_path` 参数设定重构文件的加载路径。代码如下:
 
 ```yaml
 - name: Rebuild the Armbian for Amlogic s9xxx
@@ -228,15 +229,16 @@ sudo apt-get install -y $(curl -fsSL https://raw.githubusercontent.com/ophub/aml
 
 关于 GitHUB RELEASES_TOKEN 的相关设置可参考：[RELEASES_TOKEN](https://github.com/ophub/amlogic-s9xxx-openwrt/blob/main/router-config/README.cn.md#3-fork-仓库并设置-releases_token)。相关参数与`本地打包命令`相对应，请参考上面的说明。
 
-| 参数              | 默认值             | 说明                                            |
-|------------------|-------------------|------------------------------------------------|
+| 参数              | 默认值             | 说明                                             |
+|------------------|-------------------|--------------------------------------------------|
 | armbian_path     | no                | 设置原版 Armbian 文件的路径，支持使用当前工作流中的文件路径如 `build/output/images/*.img` ，也支持使用网络下载地址如： `https://dl.armbian.com/*/Armbian_*.img.xz` |
-| armbian_soc      | s905d_s905x3      | 设置打包盒子的 `SOC` ，功能参考 `-b`                |
+| armbian_soc      | s905d_s905x3      | 设置打包盒子的 `SOC` ，功能参考 `-b`                 |
 | armbian_kernel   | 5.15.25_5.10.100  | 设置内核 [版本](https://github.com/ophub/kernel/tree/main/pub/stable)，功能参考 `-k` |
-| auto_kernel      | true              | 设置是否自动采用同系列最新版本内核，功能参考 `-a`      |
+| auto_kernel      | true              | 设置是否自动采用同系列最新版本内核，功能参考 `-a`       |
 | version_branch   | stable            | 指定内核 [版本分支](https://github.com/ophub/kernel/tree/main/pub) 名称，功能参考 `-v` |
-| armbian_size     | 2748              | 设置固件 ROOTFS 分区的大小，功能参考 `-s`           |
+| armbian_size     | 2748              | 设置固件 ROOTFS 分区的大小，功能参考 `-s`            |
 | armbian_fstype   | ext4              | 设置固件 ROOTFS 分区的文件系统类型，功能参考 `-t`     |
+| armbian_sign     | no                | 设置固件名称中的签名部分，功能参考 `-n`               |
 
 - ### GitHub Actions 输出变量说明
 
