@@ -3,7 +3,7 @@
 # Copyright (C) 2021 https://github.com/ophub/amlogic-s9xxx-armbian
 #==========================================================================
 
-name: Build armbian desktop
+name: Build armbian Bullseye desktop
 
 on:
   repository_dispatch:
@@ -16,7 +16,7 @@ on:
       set_release:
         description: "Release: jammy / focal / bullseye"
         required: false
-        default: "jammy"
+        default: "bullseye"
       set_board:
         description: "Board: odroidn2 / lepotato"
         required: false
@@ -36,11 +36,15 @@ on:
       armbian_size:
         description: "Set armbian rootfs size."
         required: false
-        default: "5584"
+        default: "8728"
       armbian_fstype:
         description: "Set armbian rootfs type."
         required: false
         default: "ext4"
+      armbian_sign:
+        description: "Set armbian custom name."
+        required: false
+        default: ""
 
   #schedule:
     #- cron: "0 17 * * 0"
@@ -94,6 +98,9 @@ jobs:
               set_desktop="xfce"
           fi
           echo "ARMBIAN_DESKTOP=${set_desktop}" >> $GITHUB_ENV
+          set_armbian_sign="${{ github.event.inputs.armbian_sign }}"
+          [[ -z "${set_armbian_sign}" ]] && set_armbian_sign="_${edition_name}"
+          echo "ARMBIAN_CUSTOM_NAME=${set_armbian_sign}" >> $GITHUB_ENV
       - name: Download source code
         id: down
         run: |
@@ -119,6 +126,7 @@ jobs:
           armbian_kernel: ${{ github.event.inputs.armbian_kernel }}
           armbian_size: ${{ github.event.inputs.armbian_size }}
           armbian_fstype: ${{ github.event.inputs.armbian_fstype }}
+          armbian_sign: ${{ env.ARMBIAN_CUSTOM_NAME }}
 
       - name: Upload Armbian image to Release
         uses: ncipollo/release-action@main
