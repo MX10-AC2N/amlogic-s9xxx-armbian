@@ -12,7 +12,7 @@ on:
       set_branch:
         description: "Branch: edge / current / legacy"
         required: false
-        default: "edge"
+        default: "current"
       set_release:
         description: "Release: bullseye"
         required: false
@@ -103,7 +103,7 @@ jobs:
           fi
           echo "ARMBIAN_DESKTOP=${set_desktop}" >> $GITHUB_ENV
           ARR_DESKTOP_APPGROUPS=("browsers" "office" "3dsupport" "chat" "desktop_tools" "editors" "internet" "multimedia" "programming" "remote_desktop")
-          set_appgroups=${{ github.event.inputs.set-appgroups }}"
+          set_appgroups="${{ github.event.inputs.set-appgroups }}"
           if [[ -z "${set_appgroups}" || -z "$(echo "${ARR_DESKTOP_APPGROUPS[@]}" | grep -w "${set_appgroups}")" ]]; then
               set_appgroups="browsers 3dsupport"
           fi
