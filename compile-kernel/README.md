@@ -10,33 +10,25 @@ You can adjust the configuration of the kernel as needed, such as adding drivers
 
 - ### Run under Ubuntu system
 
-1. Install the necessary packages (The script has only been tested on x86_64 Ubuntu-20.04/22.04)
+1. Clone the repository to local: `git clone --depth 1 https://github.com/ophub/amlogic-s9xxx-armbian.git`
+
+2. Install the necessary packages (The script has only been tested on x86_64 Ubuntu-20.04/22.04)
 
 ```yaml
+cd amlogic-s9xxx-armbian
 sudo apt-get update -y
 sudo apt-get full-upgrade -y
 # For Ubuntu-22.04
-sudo apt-get install -y $(curl -fsSL https://raw.githubusercontent.com/ophub/amlogic-s9xxx-armbian/main/compile-kernel/tools/script/ubuntu2204-build-armbian-depends)
+sudo apt-get install -y $(cat compile-kernel/tools/script/ubuntu2204-build-armbian-depends)
 ```
-
-2. Clone the repository to local: `git clone --depth 1 https://github.com/ophub/amlogic-s9xxx-armbian.git`
 
 3. Enter the root directory of `~/amlogic-s9xxx-armbian`, and then run `sudo ./recompile -d -k 5.10.100` and other specified parameter commands to compile the kernel. The script will automatically download and install the compilation environment and kernel source code and make all settings. The packaged kernel file is stored in the `compile-kernel/output` directory.
 
 - ### Run under Armbian system
 
-1. Install the necessary packages
+1. Update the local compile environment and config files: `armbian-kernel -update`
 
-```yaml
-sudo apt-get update -y
-sudo apt-get full-upgrade -y
-# For Armbian
-sudo apt-get install -y $(curl -fsSL https://raw.githubusercontent.com/ophub/amlogic-s9xxx-armbian/main/compile-kernel/tools/script/armbian-compile-kernel-depends)
-```
-
-2. Update the local compile environment and config files: `armbian-kernel -update`
-
-3. Compile the kernel: Run `armbian-kernel -d -k 5.10.100` and other specified parameter commands to compile the kernel. The script will automatically download and install the compilation environment and kernel source code and make all settings. The packaged kernel file is stored in the `/opt/kernel/compile-kernel/output` directory.
+2. Compile the kernel: Run `armbian-kernel -d -k 5.10.100` and other specified parameter commands to compile the kernel. The script will automatically download and install the compilation environment and kernel source code and make all settings. The packaged kernel file is stored in the `/opt/kernel/compile-kernel/output` directory.
 
 - ### Description of local compilation parameters
 
@@ -55,7 +47,7 @@ sudo apt-get install -y $(curl -fsSL https://raw.githubusercontent.com/ophub/aml
 - `sudo ./recompile -d -k 5.10.100 -r kernel.org`: Use the default configuration, and set the kernel source code repository through the `-r` parameter.
 - `sudo ./recompile -d -k 5.15.25_5.10.100 -a true -n -ophub -r kernel.org`: Use the default configuration, and set through multiple parameters.
 
-💡Tip: It is recommended to use the kernel source code of unifreq's [5.10](https://github.com/unifreq/linux-5.10.y), [5.15](https://github.com/unifreq/linux-5.15.y) and other repositories for compilation. He has added drivers and patches for related boxes. It is recommended to use the templates in [tools/config](tools/config), which have been pre-configured according to the relevant boxes and can be customized on this basis.
+💡Tip: It is recommended to use the kernel source code of unifreq's [5.10](https://github.com/unifreq/linux-5.10.y), [5.15](https://github.com/unifreq/linux-5.15.y) and other repositories for compilation. He has added drivers and patches for related TV Boxes. It is recommended to use the templates in [tools/config](tools/config), which have been pre-configured according to the relevant TV Boxes and can be customized on this basis.
 
 ## Compile the kernel using GitHub Actions
 
