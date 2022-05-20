@@ -13,10 +13,10 @@ on:
         description: "Branch: edge / current / legacy"
         required: false
         default: "edge"
-      set_release:
-        description: "Release: jammy / focal / bullseye"
-        required: false
-        default: "bullseye"
+#      set_release:
+#       description: "Release: jammy / focal / bullseye"
+#        required: false
+#        default: "bullseye"
       set_board:
         description: "Board: odroidn2 / lepotato"
         required: false
@@ -25,6 +25,10 @@ on:
         description: "Set desktop environment: xfce / budgie / cinnamon / gnome / xmonad / mate"
         required: false
         default: "xfce"
+      set_appgroups:
+        description: "Choose desktop appgroup: browsers office 3dsupport chat desktop_tools editors internet multimedia programming remote_desktop"
+        required: false
+        default: "browsers 3dsupport"
       armbian_soc:
         description: "Set Amlogic SoC."
         required: false
@@ -98,6 +102,12 @@ jobs:
               set_desktop="xfce"
           fi
           echo "ARMBIAN_DESKTOP=${set_desktop}" >> $GITHUB_ENV
+          ARR_DESKTOP_APPGROUPS=("browsers" "office" "3dsupport" "chat" "desktop_tools" "editors" "internet" "multimedia" "programming" "remote_desktop")
+          set_appgroups=${{ github.event.inputs.set-appgroups }}"
+          if [[ -z "${set_appgroups}" || -z "$(echo "${ARR_DESKTOP_APPGROUPS[@]}" | grep -w "${set_appgroups}")" ]]; then
+              set_appgroups="browsers 3dsupport"
+          fi
+          echo "ARMBIAN_DESKTOP_APPGROUPS=${set_appgroups}" >> $GITHUB_ENV
           set_armbian_sign="${{ github.event.inputs.armbian_sign }}"
           [[ -z "${set_armbian_sign}" ]] && set_armbian_sign="_${edition_name}"
           echo "ARMBIAN_CUSTOM_NAME=${set_armbian_sign}" >> $GITHUB_ENV
@@ -112,7 +122,7 @@ jobs:
           sudo chmod +x compile.sh
           sudo ./compile.sh BRANCH=${{ env.ARMBIAN_BRANCH }} RELEASE=${{ env.ARMBIAN_RELEASE }} BOARD=${{ env.ARMBIAN_BOARD }} \
                             BUILD_MINIMAL=no BUILD_DESKTOP=yes EXPERT=yes DESKTOP_ENVIRONMENT=${{ env.ARMBIAN_DESKTOP }} \
-                            DESKTOP_ENVIRONMENT_CONFIG_NAME=config_basic DESKTOP_APPGROUPS_SELECTED='browsers 3dsupport chat desktop_tools editors email internet multimedia office' \
+                            DESKTOP_ENVIRONMENT_CONFIG_NAME=config_basic DESKTOP_APPGROUPS_SELECTED='${{ env.ARMBIAN_DESKTOP_APPGROUPS }}' \
                             HOST=armbian KERNEL_ONLY=no KERNEL_CONFIGURE=no \
                             CLEAN_LEVEL=make,debs COMPRESS_OUTPUTIMAGE=sha
           echo "::set-output name=status::success"
@@ -137,7 +147,7 @@ jobs:
           allowUpdates: true
           token: ${{ secrets.GH_TOKEN }}
           body: |
-            This is Armbian image with ${{ env.ARMBIAN_DESKTOP }} desktop (basic_config) for Amlogic s9xxx tv box
+            This is Armbian image with ${{ env.ARMBIAN_DESKTOP }} desktop (basic_config) and (${{ env.ARMBIAN_DESKTOP_APPGROUPS }}) desktop-appgroups for Amlogic s9xxx tv box
             * Firmware information
             Default username: root
             Default password: 1234
