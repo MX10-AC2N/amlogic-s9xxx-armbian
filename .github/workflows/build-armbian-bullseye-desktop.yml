@@ -13,10 +13,10 @@ on:
         description: "Branch: edge / current / legacy"
         required: false
         default: "edge"
-#      set_release:
-#       description: "Release: jammy / focal / bullseye"
-#        required: false
-#        default: "bullseye"
+      set_release:
+       description: "Release: bullseye"
+        required: false
+        default: "bullseye"
       set_board:
         description: "Board: odroidn2 / lepotato"
         required: false
