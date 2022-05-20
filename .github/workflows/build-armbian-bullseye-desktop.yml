@@ -14,7 +14,7 @@ on:
         required: false
         default: "edge"
       set_release:
-       description: "Release: bullseye"
+        description: "Release: bullseye"
         required: false
         default: "bullseye"
       set_board:
