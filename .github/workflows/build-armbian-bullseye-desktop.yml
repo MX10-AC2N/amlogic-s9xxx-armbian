@@ -120,11 +120,22 @@ jobs:
         run: |
           cd build/
           sudo chmod +x compile.sh
-          sudo ./compile.sh BRANCH=${{ env.ARMBIAN_BRANCH }} RELEASE=${{ env.ARMBIAN_RELEASE }} BOARD=${{ env.ARMBIAN_BOARD }} \
-                            BUILD_MINIMAL=no BUILD_DESKTOP=yes EXPERT=yes DESKTOP_ENVIRONMENT=${{ env.ARMBIAN_DESKTOP }} \
-                            DESKTOP_ENVIRONMENT_CONFIG_NAME=config_basic DESKTOP_APPGROUPS_SELECTED='${{ env.ARMBIAN_DESKTOP_APPGROUPS }}' \
-                            HOST=armbian KERNEL_ONLY=no KERNEL_CONFIGURE=no DESKTOP_BETA_TARGET="${{ env.ARMBIAN_RELEASE }}:${{ env.ARMBIAN_BRANCH }}" \
-                            EXTERNAL=yes ROOT_FS_CREATE_ONLY=force CLEAN_LEVEL=make,debs COMPRESS_OUTPUTIMAGE=sha
+          sudo ./compile.sh BRANCH=${{ env.ARMBIAN_BRANCH }} \
+                            RELEASE=${{ env.ARMBIAN_RELEASE }} \
+                            BOARD=${{ env.ARMBIAN_BOARD }} \
+                            EXPERT=yes \
+                            BUILD_MINIMAL=no \
+                            BUILD_DESKTOP=yes \
+                            DESKTOP_ENVIRONMENT=${{ env.ARMBIAN_DESKTOP }} \
+                            DESKTOP_ENVIRONMENT_CONFIG_NAME=config_basic \
+                            DESKTOP_APPGROUPS_SELECTED='${{ env.ARMBIAN_DESKTOP_APPGROUPS }}' \
+                            DESKTOP_BETA_TARGET="${{ env.ARMBIAN_RELEASE }}:${{ env.ARMBIAN_BRANCH }}" \
+                            HOST=armbian \
+                            KERNEL_ONLY=no \
+                            KERNEL_CONFIGURE=no \
+                            EXTERNAL=yes \
+                            CLEAN_LEVEL=make,debs \
+                            COMPRESS_OUTPUTIMAGE=sha                           
           echo "::set-output name=status::success"
       - name: Rebuild Armbian for Amlogic s9xxx
         uses: ophub/amlogic-s9xxx-armbian@main
