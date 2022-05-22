@@ -12,7 +12,7 @@ on:
       set_branch:
         description: "Branch: edge / current / legacy"
         required: false
-        default: "current"
+        default: "edge"
       set_release:
         description: "Release: bullseye"
         required: false
@@ -123,8 +123,8 @@ jobs:
           sudo ./compile.sh BRANCH=${{ env.ARMBIAN_BRANCH }} RELEASE=${{ env.ARMBIAN_RELEASE }} BOARD=${{ env.ARMBIAN_BOARD }} \
                             BUILD_MINIMAL=no BUILD_DESKTOP=yes EXPERT=yes DESKTOP_ENVIRONMENT=${{ env.ARMBIAN_DESKTOP }} \
                             DESKTOP_ENVIRONMENT_CONFIG_NAME=config_basic DESKTOP_APPGROUPS_SELECTED='${{ env.ARMBIAN_DESKTOP_APPGROUPS }}' \
-                            HOST=armbian KERNEL_ONLY=no KERNEL_CONFIGURE=no \
-                            CLEAN_LEVEL=make,debs COMPRESS_OUTPUTIMAGE=sha
+                            HOST=armbian KERNEL_ONLY=no KERNEL_CONFIGURE=no DESKTOP_BETA_TARGET="${{ env.ARMBIAN_RELEASE }}:${{ env.ARMBIAN_BRANCH }}" \
+                            EXTERNAL=yes ROOT_FS_CREATE_ONLY=force CLEAN_LEVEL=make,debs COMPRESS_OUTPUTIMAGE=sha
           echo "::set-output name=status::success"
       - name: Rebuild Armbian for Amlogic s9xxx
         uses: ophub/amlogic-s9xxx-armbian@main
