@@ -30,25 +30,25 @@ on:
         required: false
         default: "browsers 3dsupport"
       armbian_soc:
-        description: "Set Amlogic SoC."
-        required: false
-        default: "all"
-      armbian_kernel:
-        description: "Set kernel version."
-        required: false
-        default: "5.15.25_5.10.100"
-      armbian_size:
-        description: "Set armbian rootfs size."
-        required: false
-        default: "8728"
-      armbian_fstype:
-        description: "Set armbian rootfs type."
-        required: false
-        default: "ext4"
-      armbian_sign:
-        description: "Set armbian custom name."
-        required: false
-        default: ""
+#        description: "Set Amlogic SoC."
+#        required: false
+#        default: "all"
+#      armbian_kernel:
+#        description: "Set kernel version."
+#        required: false
+#        default: "5.15.25_5.10.100"
+#     armbian_size:
+#        description: "Set armbian rootfs size."
+#        required: false
+#        default: "8728"
+#      armbian_fstype:
+#        description: "Set armbian rootfs type."
+#        required: false
+#        default: "ext4"
+#      armbian_sign:
+#        description: "Set armbian custom name."
+#        required: false
+#        default: ""
 
   #schedule:
     #- cron: "0 17 * * 0"
@@ -127,7 +127,7 @@ jobs:
                             EXPERT=yes \
                             BUILD_MINIMAL=no \
                             BUILD_DESKTOP=yes \
-                            DESKTOP_BETA_TARGET="${{ envMBIAN_RELEASE }}:${{.AR env.ARMBIAN_BRANCH }}" \
+                            DESKTOP_BETA_TARGET="${{ env.ARMBIAN_RELEASE }}:${{ env.ARMBIAN_BRANCH }}" \
                             DESKTOP_ENVIRONMENT=${{ env.ARMBIAN_DESKTOP }} \
                             DESKTOP_ENVIRONMENT_CONFIG_NAME=config_basic \
                             DESKTOP_APPGROUPS_SELECTED='${{ env.ARMBIAN_DESKTOP_APPGROUPS }}' \
