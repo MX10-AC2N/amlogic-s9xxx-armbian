@@ -114,7 +114,6 @@ jobs:
       - name: Download source code
         id: down
         run: |
-          sudo apt-get -y -qq install git
           git clone --depth 1 https://github.com/armbian/build.git
       - name: Compile Armbian [ ${{ env.ARMBIAN_BOARD }}-${{ env.ARMBIAN_DESKTOP }} ]
         id: compile
@@ -125,6 +124,7 @@ jobs:
                             RELEASE=${{ env.ARMBIAN_RELEASE }} \
                             BOARD=${{ env.ARMBIAN_BOARD }} \
                             EXPERT=yes \
+                            BETA=yes \
                             BUILD_MINIMAL=no \
                             BUILD_DESKTOP=yes \
                             DESKTOP_BETA_TARGET="${{ env.ARMBIAN_RELEASE }}:${{ env.ARMBIAN_BRANCH }}" \
@@ -132,11 +132,9 @@ jobs:
                             DESKTOP_ENVIRONMENT_CONFIG_NAME=config_basic \
                             DESKTOP_APPGROUPS_SELECTED='${{ env.ARMBIAN_DESKTOP_APPGROUPS }}' \
                             EXTERNAL=yes \
-                            EXTERNAL_NEW=compile \
                             HOST=armbian \
                             KERNEL_ONLY=no \
                             KERNEL_CONFIGURE=no \
-                            ROOT_FS_CREATE_ONLY=force \
                             CLEAN_LEVEL=make,debs \
                             COMPRESS_OUTPUTIMAGE=sha                           
           echo "::set-output name=status::success"
