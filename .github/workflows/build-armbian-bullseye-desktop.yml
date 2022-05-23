@@ -3,7 +3,7 @@
 # Copyright (C) 2021 https://github.com/ophub/amlogic-s9xxx-armbian
 #==========================================================================
 
-name: Build armbian Bullseye desktop
+name: Build Armbian Release (desktop)
 
 on:
   repository_dispatch:
@@ -29,7 +29,7 @@ on:
         description: "Choose desktop appgroup: browsers office 3dsupport chat desktop_tools editors internet multimedia programming remote_desktop"
         required: false
         default: "browsers 3dsupport"
-      armbian_soc:
+#      armbian_soc:
 #        description: "Set Amlogic SoC."
 #        required: false
 #        default: "all"
@@ -114,7 +114,7 @@ jobs:
       - name: Download source code
         id: down
         run: |
-          apt-get -y -qq install git
+          sudo apt-get -y -qq install git
           git clone --depth 1 https://github.com/armbian/build.git
       - name: Compile Armbian [ ${{ env.ARMBIAN_BOARD }}-${{ env.ARMBIAN_DESKTOP }} ]
         id: compile
