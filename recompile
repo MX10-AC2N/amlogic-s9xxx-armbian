@@ -5,7 +5,7 @@
 # License version 2. This program is licensed "as is" without any
 # warranty of any kind, whether express or implied.
 #
-# This file is a part of the Armbian Rebuild and kernel Recompile script
+# This file is a part of the Armbian for Amlogic TV Boxes
 # https://github.com/ophub/amlogic-s9xxx-armbian
 #
 # Description: Run on x86_64 Ubuntu-20.04/22.04, Compile the kernel for Amlogic s9xxx tv box
@@ -91,7 +91,7 @@ ERROR="[${red_font_prefix}ERROR${font_color_suffix}]"
 #==============================================================================================
 
 error_msg() {
-    echo -e "${ERROR} ${1}"
+    echo -e " ${ERROR} ${1}"
     exit 1
 }
 
@@ -504,6 +504,10 @@ packit_kernel() {
     tar -czf header-${kernel_outname}.tar.gz * && sync
     mv -f *.tar.gz ${out_kernel}/${kernel_version} && sync
     echo -e "${SUCCESS} The [ header-${kernel_outname}.tar.gz ] file is packaged."
+
+    cd ${out_kernel}/${kernel_version}
+    sha256sum * >sha256sums && sync
+    echo -e "${SUCCESS} The [ sha256sums ] file has been generated"
 
     cd ${out_kernel}
     tar -czf ${kernel_version}.tar.gz ${kernel_version} && sync

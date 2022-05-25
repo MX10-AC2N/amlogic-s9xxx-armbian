@@ -1,10 +1,11 @@
 #!/bin/bash
 #=========================================================================
+#
 # This file is licensed under the terms of the GNU General Public
 # License version 2. This program is licensed "as is" without any
 # warranty of any kind, whether express or implied.
 #
-# This file is a part of the Armbian Rebuild and kernel Recompile script
+# This file is a part of the Armbian for Amlogic TV Boxes
 # https://github.com/ophub/amlogic-s9xxx-armbian
 #
 # Description: LED display control
@@ -12,6 +13,7 @@
 # Copyright (C) 2022- https://github.com/ophub/amlogic-s9xxx-armbian
 #
 # Command: armbian-led
+#
 #=========================================================================
 
 do_start() {
