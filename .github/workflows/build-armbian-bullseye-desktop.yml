@@ -18,9 +18,9 @@ on:
         required: false
         default: "bullseye"
       set_board:
-        description: "Board: odroidn2 / lepotato / gtking_pro"
+        description: "Board: odroidn2 / lepotato / gtking-pro"
         required: false
-        default: "gtking_pro"
+        default: "gtking-pro"
       set_desktop:
         description: "Set desktop environment: xfce / budgie / cinnamon / gnome / xmonad / mate"
         required: false
@@ -90,7 +90,7 @@ jobs:
               set_release="focal"
           fi
           echo "ARMBIAN_RELEASE=${set_release}" >> $GITHUB_ENV
-          ARR_BOARD=("lepotato" "odroidn2" "gtking_pro")
+          ARR_BOARD=("lepotato" "odroidn2" "gtking-pro")
           set_board="${{ github.event.inputs.set_board }}"
           if  [[ -z "${set_board}" || -z "$(echo "${ARR_BOARD[@]}" | grep -w "${set_board}")" ]]; then
               set_board="lepotato"
