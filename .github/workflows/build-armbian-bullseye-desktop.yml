@@ -18,13 +18,13 @@ on:
         required: false
         default: "bullseye"
       set_board:
-        description: "Board: odroidn2 / lepotato"
+        description: "Board: odroidn2 / lepotato / gtking_pro"
         required: false
-        default: "odroidn2"
+        default: "gtking_pro"
       set_desktop:
         description: "Set desktop environment: xfce / budgie / cinnamon / gnome / xmonad / mate"
         required: false
-        default: "xfce"
+        default: "budgie"
       set_appgroups:
         description: "Choose desktop appgroup: browsers office 3dsupport chat desktop_tools editors internet multimedia programming remote_desktop"
         required: false
@@ -114,7 +114,7 @@ jobs:
       - name: Download source code
         id: down
         run: |
-          git clone --depth 1 https://github.com/armbian/build.git
+          git clone --depth 1 https://github.com/MX10-AC2N/build.git
       - name: Compile Armbian [ ${{ env.ARMBIAN_BOARD }}-${{ env.ARMBIAN_DESKTOP }} ]
         id: compile
         run: |
