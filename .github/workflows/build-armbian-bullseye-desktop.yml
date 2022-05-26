@@ -90,7 +90,7 @@ jobs:
               set_release="focal"
           fi
           echo "ARMBIAN_RELEASE=${set_release}" >> $GITHUB_ENV
-          ARR_BOARD=("lepotato" "odroidn2")
+          ARR_BOARD=("lepotato" "odroidn2" "gtking_pro")
           set_board="${{ github.event.inputs.set_board }}"
           if  [[ -z "${set_board}" || -z "$(echo "${ARR_BOARD[@]}" | grep -w "${set_board}")" ]]; then
               set_board="lepotato"
