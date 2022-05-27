@@ -18,7 +18,7 @@ on:
         required: false
         default: "bullseye"
       set_board:
-        description: "Board: odroidn2 / lepotato / gtking-pro"
+        description: "Board: odroidn2 / lepotato / uefi-arm64"
         required: false
         default: "gtking-pro"
       set_desktop:
@@ -29,26 +29,26 @@ on:
         description: "Choose desktop appgroup: browsers office 3dsupport chat desktop_tools editors internet multimedia programming remote_desktop"
         required: false
         default: "browsers 3dsupport"
-#      armbian_soc:
-#        description: "Set Amlogic SoC."
-#        required: false
-#        default: "all"
-#      armbian_kernel:
-#        description: "Set kernel version."
-#        required: false
-#        default: "5.15.25_5.10.100"
-#     armbian_size:
-#        description: "Set armbian rootfs size."
-#        required: false
-#        default: "8728"
-#      armbian_fstype:
-#        description: "Set armbian rootfs type."
-#        required: false
-#        default: "ext4"
-#      armbian_sign:
-#        description: "Set armbian custom name."
-#        required: false
-#        default: ""
+      armbian_soc:
+        description: "Set Amlogic SoC."
+        required: false
+        default: "all"
+      armbian_kernel:
+        description: "Set kernel version."
+        required: false
+        default: "5.15.25_5.10.100"
+      armbian_size:
+        description: "Set armbian rootfs size."
+        required: false
+        default: "5584"
+      armbian_fstype:
+        description: "Set armbian rootfs type."
+        required: false
+        default: "ext4"
+      armbian_sign:
+        description: "Set armbian custom name."
+        required: false
+        default: ""
 
   #schedule:
     #- cron: "0 17 * * 0"
@@ -90,7 +90,7 @@ jobs:
               set_release="focal"
           fi
           echo "ARMBIAN_RELEASE=${set_release}" >> $GITHUB_ENV
-          ARR_BOARD=("lepotato" "odroidn2" "gtking-pro")
+          ARR_BOARD=("lepotato" "odroidn2" "uefi-arm64")
           set_board="${{ github.event.inputs.set_board }}"
           if  [[ -z "${set_board}" || -z "$(echo "${ARR_BOARD[@]}" | grep -w "${set_board}")" ]]; then
               set_board="lepotato"
@@ -114,7 +114,7 @@ jobs:
       - name: Download source code
         id: down
         run: |
-          git clone --depth 1 https://github.com/MX10-AC2N/build.git
+          git clone --depth 1 https://github.com/armbian/build.git
       - name: Compile Armbian [ ${{ env.ARMBIAN_BOARD }}-${{ env.ARMBIAN_DESKTOP }} ]
         id: compile
         run: |
@@ -138,17 +138,17 @@ jobs:
                             CLEAN_LEVEL=make,debs \
                             COMPRESS_OUTPUTIMAGE=sha                           
           echo "::set-output name=status::success"
-#      - name: Rebuild Armbian for Amlogic s9xxx
-#        uses: ophub/amlogic-s9xxx-armbian@main
-#        if: steps.compile.outputs.status == 'success' && !cancelled()
-#        with:
-#          build_target: armbian
-#          armbian_path: build/output/images/*.img
-#          armbian_soc: ${{ github.event.inputs.armbian_soc }}
-#          armbian_kernel: ${{ github.event.inputs.armbian_kernel }}
-#          armbian_size: ${{ github.event.inputs.armbian_size }}
-#          armbian_fstype: ${{ github.event.inputs.armbian_fstype }}
-#          armbian_sign: ${{ env.ARMBIAN_CUSTOM_NAME }}
+      - name: Rebuild Armbian for Amlogic s9xxx
+        uses: ophub/amlogic-s9xxx-armbian@main
+        if: steps.compile.outputs.status == 'success' && !cancelled()
+        with:
+          build_target: armbian
+          armbian_path: build/output/images/*.img
+          armbian_soc: ${{ github.event.inputs.armbian_soc }}
+          armbian_kernel: ${{ github.event.inputs.armbian_kernel }}
+          armbian_size: ${{ github.event.inputs.armbian_size }}
+          armbian_fstype: ${{ github.event.inputs.armbian_fstype }}
+          armbian_sign: ${{ env.ARMBIAN_CUSTOM_NAME }}
 
       - name: Upload Armbian image to Release
         uses: ncipollo/release-action@main
