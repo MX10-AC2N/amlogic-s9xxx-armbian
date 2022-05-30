@@ -137,11 +137,11 @@ jobs:
                             KERNEL_CONFIGURE=no \
                             ROOT_FS_CREATE_ONLY=FORCE \
                             CLEAN_LEVEL=make,debs \
-                            COMPRESS_OUTPUTIMAGE=sha,gz                           
+                            COMPRESS_OUTPUTIMAGE=sha                           
           echo "::set-output name=status::success"
   
-      - name: Download a Build Artifact
-        uses: actions/download-artifact@v3.0.0
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v3
         with:
                 # Artifact name
                 name: my artifact # optional
