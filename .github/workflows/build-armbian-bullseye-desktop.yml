@@ -20,7 +20,7 @@ on:
       set_board:
         description: "Board: odroidn2 / lepotato / uefi-arm64"
         required: false
-        default: "gtking-pro"
+        default: "odroidn2"
       set_desktop:
         description: "Set desktop environment: xfce / budgie / cinnamon / gnome / xmonad / mate"
         required: false
@@ -36,7 +36,7 @@ on:
       armbian_kernel:
         description: "Set kernel version."
         required: false
-        default: "5.15.25_5.10.100"
+        default: "5.15.43_5.17.9"
       armbian_size:
         description: "Set armbian rootfs size."
         required: false
@@ -135,9 +135,19 @@ jobs:
                             HOST=armbian \
                             KERNEL_ONLY=no \
                             KERNEL_CONFIGURE=no \
+                            ROOT_FS_CREATE_ONLY=FORCE \
                             CLEAN_LEVEL=make,debs \
-                            COMPRESS_OUTPUTIMAGE=sha                           
+                            COMPRESS_OUTPUTIMAGE=sha,gz                           
           echo "::set-output name=status::success"
+  
+      - name: Download a Build Artifact
+        uses: actions/download-artifact@v3.0.0
+        with:
+                # Artifact name
+                name: my artifact # optional
+                # Destination path
+                path: ~/download/path # optional
+      
       - name: Rebuild Armbian for Amlogic s9xxx
         uses: ophub/amlogic-s9xxx-armbian@main
         if: steps.compile.outputs.status == 'success' && !cancelled()
