@@ -17,6 +17,7 @@
 #========================= Set default parameters ==========================
 #
 # Set font color
+<<<<<<< HEAD
 blue_font_prefix="\033[94m"
 purple_font_prefix="\033[95m"
 green_font_prefix="\033[92m"
@@ -28,6 +29,13 @@ STEPS="[${purple_font_prefix}STEPS${font_color_suffix}]"
 SUCCESS="[${green_font_prefix}SUCCESS${font_color_suffix}]"
 OPT="[${yellow_font_prefix}OPT${font_color_suffix}]"
 ERROR="[${red_font_prefix}ERROR${font_color_suffix}]"
+=======
+STEPS="[\033[95m STEPS \033[0m]"
+INFO="[\033[94m INFO \033[0m]"
+SUCCESS="[\033[92m SUCCESS \033[0m]"
+OPTIONS="[\033[93m OPTIONS \033[0m]"
+ERROR="[\033[91m ERROR \033[0m]"
+>>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
 #
 #===========================================================================
 
@@ -40,13 +48,22 @@ error_msg() {
 # Check disk
 do_checkdisk() {
     # Find the partition where root is located
+<<<<<<< HEAD
     ROOT_PTNAME=$(df / | tail -n1 | awk '{print $1}' | awk -F '/' '{print $3}')
     if [ "${ROOT_PTNAME}" == "" ]; then
+=======
+    ROOT_PTNAME="$(df / | tail -n1 | awk '{print $1}' | awk -F '/' '{print $3}')"
+    if [[ -z "${ROOT_PTNAME}" ]]; then
+>>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
         error_msg "Cannot find the partition corresponding to the root file system!"
     fi
 
     # Find the disk where the partition is located, only supports mmcblk?p? sd?? hd?? vd?? and other formats
+<<<<<<< HEAD
     case ${ROOT_PTNAME} in
+=======
+    case "${ROOT_PTNAME}" in
+>>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
     mmcblk?p[1-4])
         DISK_NAME="$(echo ${ROOT_PTNAME} | awk '{print substr($1, 1, length($1)-2)}')"
         PT_PRE="${DISK_NAME}p"
@@ -69,6 +86,7 @@ create_new_part() {
 
     # Set the type of file system
     cat <<EOF
+<<<<<<< HEAD
 --------------------------------------------
 Please select the type of file system:
 1. ext4
@@ -76,6 +94,16 @@ Please select the type of file system:
 --------------------------------------------
 EOF
     echo -ne "${OPT} Please Input ID: "
+=======
+-----------------------------------------------
+ID  TYPE
+-----------------------------------------------
+1   ext4
+2   btrfs
+-----------------------------------------------
+EOF
+    echo -ne "${OPTIONS} Please Input ID: "
+>>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
     read filetype
     if [[ "${filetype}" -eq "2" ]]; then
         file_system_type="btrfs"
@@ -89,6 +117,7 @@ EOF
 
     # Confirm UUID
     ROOTFS_UUID="$(cat /proc/sys/kernel/random/uuid)"
+<<<<<<< HEAD
     [ -z "${ROOTFS_UUID}" ] && ROOTFS_UUID="$(uuidgen)"
     [ -z "${ROOTFS_UUID}" ] && error_msg "The uuidgen is invalid, cannot continue."
     echo -e "${INFO} ROOTFS_UUID: ${ROOTFS_UUID}"
@@ -100,13 +129,31 @@ EOF
     fi
     TOTAL_SIZE=$(lsblk -l -b -o NAME,SIZE | awk "\$1 ~ /^${DISK_NAME}\$/ {print \$2}")
     END_P3=$((TOTAL_SIZE / 512 - 1))
+=======
+    [[ -z "${ROOTFS_UUID}" ]] && ROOTFS_UUID="$(uuidgen)"
+    [[ -z "${ROOTFS_UUID}" ]] && error_msg "The uuidgen is invalid, cannot continue."
+    echo -e "${INFO} ROOTFS_UUID: ${ROOTFS_UUID}"
+
+    # Get the starting position of the p3 partition
+    START_P3="$(fdisk -l | grep "${ROOT_PTNAME}" | sed -n '$p' | awk '{print $3}' | echo $(($(xargs) + 1)))"
+    if [[ -z "${START_P3}" || -z "$(echo ${START_P3} | sed -n "/^[0-9]\+$/p")" ]]; then
+        error_msg "Unable to get starting position!"
+    fi
+    TOTAL_SIZE="$(lsblk -l -b -o NAME,SIZE | awk "\$1 ~ /^${DISK_NAME}\$/ {print \$2}")"
+    END_P3="$((TOTAL_SIZE / 512 - 1))"
+>>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
 
     cat >/tmp/fdisk.script <<EOF
 n
 p
 3
+<<<<<<< HEAD
 $START_P3
 $END_P3
+=======
+${START_P3}
+${END_P3}
+>>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
 Y
 t
 3
@@ -117,7 +164,11 @@ EOF
 
     echo -e "${STEPS} Fdisk starting ... "
     fdisk /dev/${DISK_NAME} </tmp/fdisk.script 2>/dev/null
+<<<<<<< HEAD
     [ "$?" -ne "0" ] && error_msg "Fdisk failed!"
+=======
+    [[ "$?" -ne "0" ]] && error_msg "Fdisk failed!"
+>>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
     sync
 
     echo -e "${STEPS} Create data filesystem ... "
@@ -173,7 +224,11 @@ echo -e "${STEPS} Welcome to use TF/SD/USB partition management tool."
 # Check disk
 do_checkdisk
 # Prompt the user to select Expand/Create
+<<<<<<< HEAD
 echo -ne "${OPT} Do you want to expand or create partitions? Expand=(e) Create=(c): "
+=======
+echo -ne "${OPTIONS} Do you want to expand or create partitions? Expand=(e) Create=(c): "
+>>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
 read ec
 case "${ec}" in
     e | E | expand) expand_current_part ;;

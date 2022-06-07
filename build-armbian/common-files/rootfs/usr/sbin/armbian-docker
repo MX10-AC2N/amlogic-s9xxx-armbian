@@ -16,6 +16,7 @@
 #
 #========================= Set default parameters ==========================
 #
+<<<<<<< HEAD
 # Set font color
 blue_font_prefix="\033[94m"
 purple_font_prefix="\033[95m"
@@ -32,6 +33,18 @@ ERROR="[${red_font_prefix}ERROR${font_color_suffix}]"
 # Get custom firmware information
 ophub_release_file="/etc/ophub-release"
 #
+=======
+# Get custom firmware information
+ophub_release_file="/etc/ophub-release"
+#
+# Set font color
+STEPS="[\033[95m STEPS \033[0m]"
+INFO="[\033[94m INFO \033[0m]"
+SUCCESS="[\033[92m SUCCESS \033[0m]"
+OPTIONS="[\033[93m OPTIONS \033[0m]"
+ERROR="[\033[91m ERROR \033[0m]"
+#
+>>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
 #===========================================================================
 
 # Encountered a serious error, abort the script execution
@@ -42,21 +55,38 @@ error_msg() {
 
 # Check release info
 check_release() {
+<<<<<<< HEAD
     source ${ophub_release_file}
     VERSION_CODEID="${VERSION_CODEID}"     # ubuntu       -  debian
     VERSION_CODENAME="${VERSION_CODENAME}" # jammy/focal  -  bullseye
     if [[ -z "${VERSION_CODEID}" ]]; then
         echo -ne "${OPT} Please Input VERSION_CODEID Name [ubuntu/debian]: "
+=======
+    source "${ophub_release_file}"
+    VERSION_CODEID="${VERSION_CODEID}"     # ubuntu       -  debian
+    VERSION_CODENAME="${VERSION_CODENAME}" # jammy/focal  -  bullseye
+    if [[ -z "${VERSION_CODEID}" ]]; then
+        echo -ne "${OPTIONS} Please Input VERSION_CODEID Name [ubuntu/debian]: "
+>>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
         read VERSION_CODEID
         VERSION_CODEID="${VERSION_CODEID}"
     fi
     if [[ -z "${VERSION_CODENAME}" ]]; then
+<<<<<<< HEAD
         echo -ne "${OPT} Please Input VERSION_CODENAME Name [jammy/focal/bullseye]: "
         read VERSION_CODENAME
         VERSION_CODENAME="${VERSION_CODENAME}"
     fi
     echo -e "${INFO} VERSION_CODEID: ${VERSION_CODEID}"
     echo -e "${INFO} VERSION_CODENAME: ${VERSION_CODENAME}"
+=======
+        echo -ne "${OPTIONS} Please Input VERSION_CODENAME Name [jammy/focal/bullseye]: "
+        read VERSION_CODENAME
+        VERSION_CODENAME="${VERSION_CODENAME}"
+    fi
+    echo -e "${INFO} VERSION_CODEID: [ ${VERSION_CODEID} ]"
+    echo -e "${INFO} VERSION_CODENAME: [ ${VERSION_CODENAME} ]"
+>>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
 }
 
 # Install docker environment
@@ -79,7 +109,11 @@ install_docker() {
     sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose
 
     echo -e "${STEPS} Install docker accelerator ... "
+<<<<<<< HEAD
     [ -d "/etc/docker" ] || mkdir -p /etc/docker
+=======
+    [[ -d "/etc/docker" ]] || mkdir -p /etc/docker
+>>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
     sudo cat >/etc/docker/daemon.json <<EOF
 {
   "bip": "172.31.0.1/24",
@@ -137,8 +171,13 @@ check_release
 install_docker
 #
 # Check if portainer container is installed
+<<<<<<< HEAD
 if [ -z "$(docker ps -q -f name=portainer)" ]; then
     echo -ne "${OPT} Select Install Portainer-ce?  No=(n) / LAN ip access=(h) / Domain cert access=(s): "
+=======
+if [[ -z "$(docker ps -q -f name=portainer)" ]]; then
+    echo -ne "${OPTIONS} Select Install Portainer-ce?  No=(n) / LAN ip access=(h) / Domain cert access=(s): "
+>>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
     read pt
     case "${pt}" in
         h | H | http)  portainer_lan ;;
