@@ -63,6 +63,7 @@ clang_file="clang+llvm-14.0.0-aarch64-linux-gnu.tar.xz"
 #
 # Set font color
 <<<<<<< HEAD
+<<<<<<< HEAD
 blue_font_prefix="\033[94m"
 purple_font_prefix="\033[95m"
 green_font_prefix="\033[92m"
@@ -75,12 +76,17 @@ SUCCESS="[${green_font_prefix}SUCCESS${font_color_suffix}]"
 WARNING="[${yellow_font_prefix}WARNING${font_color_suffix}]"
 ERROR="[${red_font_prefix}ERROR${font_color_suffix}]"
 =======
+=======
+>>>>>>> 0425da52b1570bab6c33677736bd0bc29b123e86
 STEPS="[\033[95m STEPS \033[0m]"
 INFO="[\033[94m INFO \033[0m]"
 SUCCESS="[\033[92m SUCCESS \033[0m]"
 WARNING="[\033[93m WARNING \033[0m]"
 ERROR="[\033[91m ERROR \033[0m]"
+<<<<<<< HEAD
 >>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+=======
+>>>>>>> 0425da52b1570bab6c33677736bd0bc29b123e86
 #
 #==================================================================================
 
@@ -94,6 +100,7 @@ init_var() {
 
     # If it is followed by [ : ], it means that the option requires a parameter value
 <<<<<<< HEAD
+<<<<<<< HEAD
     get_all_ver=$(getopt "dk:a:n:r:" "${@}")
 
     while [ -n "${1}" ]; do
@@ -102,6 +109,11 @@ init_var() {
 
     while [[ -n "${1}" ]]; do
 >>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+=======
+    get_all_ver="$(getopt "dk:a:n:r:" "${@}")"
+
+    while [[ -n "${1}" ]]; do
+>>>>>>> 0425da52b1570bab6c33677736bd0bc29b123e86
         case "${1}" in
         -d | --default)
             : ${build_kernel:="${build_kernel}"}
@@ -111,10 +123,14 @@ init_var() {
             ;;
         -k | --kernel)
 <<<<<<< HEAD
+<<<<<<< HEAD
             if [ -n "${2}" ]; then
 =======
             if [[ -n "${2}" ]]; then
 >>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+=======
+            if [[ -n "${2}" ]]; then
+>>>>>>> 0425da52b1570bab6c33677736bd0bc29b123e86
                 oldIFS=$IFS
                 IFS=_
                 build_kernel=(${2})
@@ -126,10 +142,14 @@ init_var() {
             ;;
         -a | --autoKernel)
 <<<<<<< HEAD
+<<<<<<< HEAD
             if [ -n "${2}" ]; then
 =======
             if [[ -n "${2}" ]]; then
 >>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+=======
+            if [[ -n "${2}" ]]; then
+>>>>>>> 0425da52b1570bab6c33677736bd0bc29b123e86
                 auto_kernel="${2}"
                 shift
             else
@@ -138,10 +158,14 @@ init_var() {
             ;;
         -n | --customName)
 <<<<<<< HEAD
+<<<<<<< HEAD
             if [ -n "${2}" ]; then
 =======
             if [[ -n "${2}" ]]; then
 >>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+=======
+            if [[ -n "${2}" ]]; then
+>>>>>>> 0425da52b1570bab6c33677736bd0bc29b123e86
                 custom_name="${2}"
                 shift
             else
@@ -150,10 +174,14 @@ init_var() {
             ;;
         -r | --repo)
 <<<<<<< HEAD
+<<<<<<< HEAD
             if [ -n "${2}" ]; then
 =======
             if [[ -n "${2}" ]]; then
 >>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+=======
+            if [[ -n "${2}" ]]; then
+>>>>>>> 0425da52b1570bab6c33677736bd0bc29b123e86
                 repo_owner="${2}"
                 shift
             else
@@ -174,12 +202,17 @@ init_var() {
     code_branch="$(echo "${input_r_value}" | awk -F '@' '{print $2}')"
     #
 <<<<<<< HEAD
+<<<<<<< HEAD
     [ -n "${code_owner}" ] || error_msg "The [ -r ] parameter is invalid."
     [ -n "${code_branch}" ] || code_branch="${repo_branch}"
 =======
     [[ -n "${code_owner}" ]] || error_msg "The [ -r ] parameter is invalid."
     [[ -n "${code_branch}" ]] || code_branch="${repo_branch}"
 >>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+=======
+    [[ -n "${code_owner}" ]] || error_msg "The [ -r ] parameter is invalid."
+    [[ -n "${code_branch}" ]] || code_branch="${repo_branch}"
+>>>>>>> 0425da52b1570bab6c33677736bd0bc29b123e86
 }
 
 toolchain_check() {
@@ -192,10 +225,14 @@ toolchain_check() {
 
     if [[ "${host_release}" != "jammy" ]]; then
 <<<<<<< HEAD
+<<<<<<< HEAD
         [ -d "${toolchain_path}" ] || mkdir -p ${toolchain_path}
 =======
         [[ -d "${toolchain_path}" ]] || mkdir -p ${toolchain_path}
 >>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+=======
+        [[ -d "${toolchain_path}" ]] || mkdir -p ${toolchain_path}
+>>>>>>> 0425da52b1570bab6c33677736bd0bc29b123e86
         # Download clang for Armbian
         if [[ ! -d "${toolchain_path}/${clang_file//.tar.xz/}/bin" ]]; then
             echo -e "${INFO} Download clang [ ${clang_file} ] ..."
@@ -203,10 +240,14 @@ toolchain_check() {
             tar -xJf ${toolchain_path}/${clang_file} -C ${toolchain_path} && sync
             rm -f ${toolchain_path}/${clang_file} && sync
 <<<<<<< HEAD
+<<<<<<< HEAD
             [ -d "${toolchain_path}/${clang_file//.tar.xz/}/bin" ] || error_msg "The clang is not set!"
 =======
             [[ -d "${toolchain_path}/${clang_file//.tar.xz/}/bin" ]] || error_msg "The clang is not set!"
 >>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+=======
+            [[ -d "${toolchain_path}/${clang_file//.tar.xz/}/bin" ]] || error_msg "The clang is not set!"
+>>>>>>> 0425da52b1570bab6c33677736bd0bc29b123e86
         fi
     fi
 }
@@ -221,13 +262,19 @@ query_version() {
     for KERNEL_VAR in ${build_kernel[*]}; do
         echo -e "${INFO} (${i}) Auto query the latest kernel version of the same series for [ ${KERNEL_VAR} ]"
 <<<<<<< HEAD
+<<<<<<< HEAD
         MAIN_LINE_M=$(echo "${KERNEL_VAR}" | cut -d '.' -f1)
         MAIN_LINE_V=$(echo "${KERNEL_VAR}" | cut -d '.' -f2)
         MAIN_LINE_S=$(echo "${KERNEL_VAR}" | cut -d '.' -f3)
         MAIN_LINE="${MAIN_LINE_M}.${MAIN_LINE_V}"
+=======
+        # Identify the kernel mainline
+        MAIN_LINE="$(echo ${KERNEL_VAR} | awk -F '.' '{print $1"."$2}')"
+>>>>>>> 0425da52b1570bab6c33677736bd0bc29b123e86
 
-        if [ "${code_owner}" == "kernel.org" ]; then
+        if [[ "${code_owner}" == "kernel.org" ]]; then
             # latest_version="5.10.100"
+<<<<<<< HEAD
             latest_version=$(curl -s ${kernel_org_repo} | grep -oE linux-${MAIN_LINE}.[0-9]+.tar.xz | sort -rV | head -n 1 | grep -oE '[1-9].[0-9]{1,3}.[0-9]+')
             if [[ "$?" -eq "0" && ! -z "${latest_version}" ]]; then
 =======
@@ -239,6 +286,10 @@ query_version() {
             latest_version="$(curl -s ${kernel_org_repo} | grep -oE linux-${MAIN_LINE}.[0-9]+.tar.xz | sort -rV | head -n 1 | grep -oE '[1-9].[0-9]{1,3}.[0-9]+')"
             if [[ "${?}" -eq "0" && -n "${latest_version}" ]]; then
 >>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+=======
+            latest_version="$(curl -s ${kernel_org_repo} | grep -oE linux-${MAIN_LINE}.[0-9]+.tar.xz | sort -rV | head -n 1 | grep -oE '[1-9].[0-9]{1,3}.[0-9]+')"
+            if [[ "${?}" -eq "0" && -n "${latest_version}" ]]; then
+>>>>>>> 0425da52b1570bab6c33677736bd0bc29b123e86
                 tmp_arr_kernels[${i}]="${latest_version}"
             else
                 error_msg "Failed to query the kernel version in [ ${kernel_org_repo} ]"
@@ -246,19 +297,27 @@ query_version() {
             echo -e "${INFO} (${i}) [ ${tmp_arr_kernels[$i]} ] is kernel.org latest kernel. \n"
         else
 <<<<<<< HEAD
+<<<<<<< HEAD
             if [ -z "${code_repo}" ]; then linux_repo="linux-${MAIN_LINE}.y"; else linux_repo="${code_repo}"; fi
 =======
             if [[ -z "${code_repo}" ]]; then linux_repo="linux-${MAIN_LINE}.y"; else linux_repo="${code_repo}"; fi
 >>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+=======
+            if [[ -z "${code_repo}" ]]; then linux_repo="linux-${MAIN_LINE}.y"; else linux_repo="${code_repo}"; fi
+>>>>>>> 0425da52b1570bab6c33677736bd0bc29b123e86
             github_kernel_repo="${code_owner}/${linux_repo}/${code_branch}"
             github_kernel_ver="https://raw.githubusercontent.com/${github_kernel_repo}/Makefile"
             # latest_version="180"
             latest_version="$(curl -s ${github_kernel_ver} | grep -oE "SUBLEVEL =.*" | head -n 1 | grep -oE '[0-9]{1,3}')"
 <<<<<<< HEAD
+<<<<<<< HEAD
             if [[ "$?" -eq "0" && ! -z "${latest_version}" ]]; then
 =======
             if [[ "${?}" -eq "0" && -n "${latest_version}" ]]; then
 >>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+=======
+            if [[ "${?}" -eq "0" && -n "${latest_version}" ]]; then
+>>>>>>> 0425da52b1570bab6c33677736bd0bc29b123e86
                 tmp_arr_kernels[${i}]="${MAIN_LINE}.${latest_version}"
             else
                 error_msg "Failed to query the kernel version in [ github.com/${github_kernel_repo} ]"
@@ -272,10 +331,14 @@ query_version() {
     # Reset the kernel array to the latest kernel version
     unset build_kernel
 <<<<<<< HEAD
+<<<<<<< HEAD
     build_kernel=${tmp_arr_kernels[*]}
 =======
     build_kernel="${tmp_arr_kernels[*]}"
 >>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+=======
+    build_kernel="${tmp_arr_kernels[*]}"
+>>>>>>> 0425da52b1570bab6c33677736bd0bc29b123e86
 }
 
 get_kernel_source() {
@@ -283,21 +346,29 @@ get_kernel_source() {
     # kernel_folder > kernel_.tar.xz_file > download_from_kernel.org
     echo -e "${STEPS} Start query and download the kernel."
 <<<<<<< HEAD
+<<<<<<< HEAD
     [ -d "${kernel_path}" ] || mkdir -p ${kernel_path}
     if [ ! -d "${kernel_path}/${local_kernel_path}" ]; then
         if [ "${code_owner}" == "kernel.org" ]; then
             if [ -f "${kernel_path}/${local_kernel_path}.tar.xz" ]; then
+=======
+    [[ -d "${kernel_path}" ]] || mkdir -p ${kernel_path}
+    if [[ ! -d "${kernel_path}/${local_kernel_path}" ]]; then
+        if [[ "${code_owner}" == "kernel.org" ]]; then
+            if [[ -f "${kernel_path}/${local_kernel_path}.tar.xz" ]]; then
+>>>>>>> 0425da52b1570bab6c33677736bd0bc29b123e86
                 echo -e "${INFO} Unzip local files [ ${local_kernel_path}.tar.xz ]"
                 cd ${kernel_path}
                 tar -xJf ${local_kernel_path}.tar.xz
-                [ "$?" -eq "0" ] || error_msg "[ ${local_kernel_path}.tar.xz ] file decompression failed."
+                [[ "${?}" -eq "0" ]] || error_msg "[ ${local_kernel_path}.tar.xz ] file decompression failed."
             else
                 echo -e "${INFO} [ ${kernel_version} ] Kernel loading from [ ${server_kernel_repo}${local_kernel_path}.tar.xz ]"
                 wget -q -P ${kernel_path} ${server_kernel_repo}${local_kernel_path}.tar.xz && sync
-                if [[ "$?" -eq "0" && -s "${kernel_path}/${local_kernel_path}.tar.xz" ]]; then
+                if [[ "${?}" -eq "0" && -s "${kernel_path}/${local_kernel_path}.tar.xz" ]]; then
                     echo -e "${SUCCESS} The kernel file is downloaded successfully."
                     cd ${kernel_path}
                     tar -xJf ${local_kernel_path}.tar.xz && sync
+<<<<<<< HEAD
                     [ -d "${local_kernel_path}" ] || error_msg "[ ${local_kernel_path}.tar.xz ] file decompression failed."
 =======
     [[ -d "${kernel_path}" ]] || mkdir -p ${kernel_path}
@@ -317,6 +388,9 @@ get_kernel_source() {
                     tar -xJf ${local_kernel_path}.tar.xz && sync
                     [[ -d "${local_kernel_path}" ]] || error_msg "[ ${local_kernel_path}.tar.xz ] file decompression failed."
 >>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+=======
+                    [[ -d "${local_kernel_path}" ]] || error_msg "[ ${local_kernel_path}.tar.xz ] file decompression failed."
+>>>>>>> 0425da52b1570bab6c33677736bd0bc29b123e86
                 else
                     error_msg "Kernel file download failed!"
                 fi
@@ -324,6 +398,7 @@ get_kernel_source() {
         else
             echo -e "${INFO} Start cloning from [ https://github.com/${server_kernel_repo} -b ${code_branch} ]"
             git clone --depth 1 https://github.com/${server_kernel_repo} -b ${code_branch} ${kernel_path}/${local_kernel_path}
+<<<<<<< HEAD
 <<<<<<< HEAD
             [ "$?" -eq "0" ] || error_msg "[ https://github.com/${server_kernel_repo} ] Clone failed."
         fi
@@ -333,6 +408,11 @@ get_kernel_source() {
         fi
     elif [[ "${code_owner}" != "kernel.org" ]]; then
 >>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+=======
+            [[ "${?}" -eq "0" ]] || error_msg "[ https://github.com/${server_kernel_repo} ] Clone failed."
+        fi
+    elif [[ "${code_owner}" != "kernel.org" ]]; then
+>>>>>>> 0425da52b1570bab6c33677736bd0bc29b123e86
         # Get a local kernel version
         local_makefile="${kernel_path}/${local_kernel_path}/Makefile"
         local_makefile_version="$(cat ${local_makefile} | grep -oE "VERSION =.*" | head -n 1 | grep -oE '[0-9]{1,3}')"
@@ -379,14 +459,20 @@ compile_kernel() {
     export LOCALVERSION="${custom_name}"
     if [[ "${host_release}" == "jammy" ]]; then
 <<<<<<< HEAD
+<<<<<<< HEAD
         export CC=clang
         export LD=ld.lld
+=======
+        export CC="clang"
+        export LD="ld.lld"
+>>>>>>> 0425da52b1570bab6c33677736bd0bc29b123e86
     else
-        export CC=${toolchain_path}/${clang_file//.tar.xz/}/bin/clang
-        export LD=${toolchain_path}/${clang_file//.tar.xz/}/bin/ld.lld
+        export CC="${toolchain_path}/${clang_file//.tar.xz/}/bin/clang"
+        export LD="${toolchain_path}/${clang_file//.tar.xz/}/bin/ld.lld"
         #
         # Add $PATH variable
         path_armbian="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+<<<<<<< HEAD
         path_clang=${toolchain_path}/${clang_file//.tar.xz/}/bin:${path_armbian}
 =======
         export CC="clang"
@@ -399,6 +485,9 @@ compile_kernel() {
         path_armbian="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
         path_clang="${toolchain_path}/${clang_file//.tar.xz/}/bin:${path_armbian}"
 >>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+=======
+        path_clang="${toolchain_path}/${clang_file//.tar.xz/}/bin:${path_armbian}"
+>>>>>>> 0425da52b1570bab6c33677736bd0bc29b123e86
         # Set $PATH variable for ~/.bashrc
         sed -i '/^PATH=/d' ~/.bashrc 2>/dev/null && sync
         echo "PATH=${path_clang}" >>~/.bashrc && sync
@@ -425,6 +514,7 @@ compile_kernel() {
 
     # Check .config file
 <<<<<<< HEAD
+<<<<<<< HEAD
     if [ ! -f ".config" ]; then
         # Copy config file
         echo -e "${INFO} Copy config file to ${local_kernel_path}"
@@ -439,6 +529,14 @@ compile_kernel() {
         config_demo_file="${config_demo##*/}"
         [[ -z "${config_demo_file}" ]] && error_msg "Missing [ config-${kernel_verpatch}* ] template!"
 >>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+=======
+    if [[ ! -f ".config" ]]; then
+        # Copy config file
+        echo -e "${INFO} Copy config file to ${local_kernel_path}"
+        config_demo="$(ls ${config_path}/config-${kernel_verpatch}* 2>/dev/null | sort -rV | head -n 1)"
+        config_demo_file="${config_demo##*/}"
+        [[ -z "${config_demo_file}" ]] && error_msg "Missing [ config-${kernel_verpatch}* ] template!"
+>>>>>>> 0425da52b1570bab6c33677736bd0bc29b123e86
         echo -e "${INFO} CONFIG_DEMO: [ ${config_path}/${config_demo_file} ]"
         cp -f ${config_path}/${config_demo_file} .config && sync
     else
@@ -450,12 +548,17 @@ compile_kernel() {
 
     # Enable/Disabled Linux Kernel Clang LTO
 <<<<<<< HEAD
+<<<<<<< HEAD
     kernel_x=$(echo "${kernel_version}" | cut -d '.' -f1)
     kernel_y=$(echo "${kernel_version}" | cut -d '.' -f2)
 =======
     kernel_x="$(echo "${kernel_version}" | cut -d '.' -f1)"
     kernel_y="$(echo "${kernel_version}" | cut -d '.' -f2)"
 >>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+=======
+    kernel_x="$(echo "${kernel_version}" | cut -d '.' -f1)"
+    kernel_y="$(echo "${kernel_version}" | cut -d '.' -f2)"
+>>>>>>> 0425da52b1570bab6c33677736bd0bc29b123e86
     if [[ "${kernel_x}" -ge "6" ]] || [[ "${kernel_x}" -eq "5" && "${kernel_y}" -ge "12" ]]; then
         scripts/config -e LTO_CLANG_THIN
     else
@@ -466,6 +569,7 @@ compile_kernel() {
     echo -e "${STEPS} Start compilation kernel [ ${local_kernel_path} ]..."
     PROCESS="$(cat /proc/cpuinfo | grep "processor" | wc -l)"
 <<<<<<< HEAD
+<<<<<<< HEAD
     [ -z ${PROCESS} ] && PROCESS="1" && echo "PROCESS: 1"
     make ${MAKE_SET_STRING} Image modules dtbs -j${PROCESS}
     [ $? -eq 0 ] && echo -e "${SUCCESS} The kernel is compiled successfully."
@@ -474,24 +578,37 @@ compile_kernel() {
     make ${MAKE_SET_STRING} Image modules dtbs -j${PROCESS}
     [[ "${?}" -eq "0" ]] && echo -e "${SUCCESS} The kernel is compiled successfully."
 >>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+=======
+    [[ -z "${PROCESS}" ]] && PROCESS="1" && echo "PROCESS: 1"
+    make ${MAKE_SET_STRING} Image modules dtbs -j${PROCESS}
+    [[ "${?}" -eq "0" ]] && echo -e "${SUCCESS} The kernel is compiled successfully."
+>>>>>>> 0425da52b1570bab6c33677736bd0bc29b123e86
 
     # Install modules
     echo -e "${STEPS} Install modules ..."
     make ${MAKE_SET_STRING} INSTALL_MOD_PATH=${out_kernel}/modules modules_install
 <<<<<<< HEAD
+<<<<<<< HEAD
     [ $? -eq 0 ] && echo -e "${SUCCESS} The modules is installed successfully."
 =======
     [[ "${?}" -eq "0" ]] && echo -e "${SUCCESS} The modules is installed successfully."
 >>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+=======
+    [[ "${?}" -eq "0" ]] && echo -e "${SUCCESS} The modules is installed successfully."
+>>>>>>> 0425da52b1570bab6c33677736bd0bc29b123e86
 
     # Install headers
     echo -e "${STEPS} Install headers ..."
     make ${MAKE_SET_STRING} INSTALL_HDR_PATH=${out_kernel}/header headers_install
 <<<<<<< HEAD
+<<<<<<< HEAD
     [ $? -eq 0 ] && echo -e "${SUCCESS} The headers is installed successfully."
 =======
     [[ "${?}" -eq "0" ]] && echo -e "${SUCCESS} The headers is installed successfully."
 >>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+=======
+    [[ "${?}" -eq "0" ]] && echo -e "${SUCCESS} The headers is installed successfully."
+>>>>>>> 0425da52b1570bab6c33677736bd0bc29b123e86
 }
 
 generate_uinitrd() {
@@ -535,10 +652,14 @@ generate_uinitrd() {
     update-initramfs -c -k ${kernel_outname} 2>/dev/null
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     if [ -f uInitrd ]; then
 =======
     if [[ -f uInitrd ]]; then
 >>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+=======
+    if [[ -f uInitrd ]]; then
+>>>>>>> 0425da52b1570bab6c33677736bd0bc29b123e86
         echo -e "${SUCCESS} The initrd.img and uInitrd file is Successfully generated."
         mv -f uInitrd uInitrd-${kernel_outname} 2>/dev/null && sync
     else
@@ -617,10 +738,14 @@ loop_recompile() {
     cd ${make_path}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     j=1
 =======
     j="1"
 >>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+=======
+    j="1"
+>>>>>>> 0425da52b1570bab6c33677736bd0bc29b123e86
     for k in ${build_kernel[*]}; do
         # kernel_version, such as [ 5.10.100 ]
         kernel_version="${k}"
@@ -630,6 +755,7 @@ loop_recompile() {
         kernel_sub="$(echo ${kernel_version} | awk -F '.' '{print $3}')"
 
         # The loop variable assignment
+<<<<<<< HEAD
 <<<<<<< HEAD
         if [ "${code_owner}" == "kernel.org" ]; then
             server_kernel_repo="${kernel_org_repo}"
@@ -641,6 +767,12 @@ loop_recompile() {
             local_kernel_path="linux-${kernel_version}"
         elif [[ -z "${code_repo}" ]]; then
 >>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+=======
+        if [[ "${code_owner}" == "kernel.org" ]]; then
+            server_kernel_repo="${kernel_org_repo}"
+            local_kernel_path="linux-${kernel_version}"
+        elif [[ -z "${code_repo}" ]]; then
+>>>>>>> 0425da52b1570bab6c33677736bd0bc29b123e86
             server_kernel_repo="${code_owner}/linux-${kernel_verpatch}.y"
             local_kernel_path="linux-${kernel_verpatch}.y"
         else
@@ -662,10 +794,14 @@ loop_recompile() {
 
 # Check script permission, supports running on Armbian system.
 <<<<<<< HEAD
+<<<<<<< HEAD
 [[ "$(id -u)" == "0" ]] || error_msg "Please run this script as root: [ sudo ./$0 ]"
 =======
 [[ "$(id -u)" == "0" ]] || error_msg "Please run this script as root: [ sudo ./${0} ]"
 >>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+=======
+[[ "$(id -u)" == "0" ]] || error_msg "Please run this script as root: [ sudo ./${0} ]"
+>>>>>>> 0425da52b1570bab6c33677736bd0bc29b123e86
 [[ "${arch_info}" == "aarch64" ]] || error_msg "The script only supports running under Armbian system."
 # Show welcome and server start information
 echo -e "Welcome to compile kernel! \n"
