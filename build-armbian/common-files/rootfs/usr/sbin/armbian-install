@@ -20,6 +20,13 @@
 #============================== Functions list ==============================
 #
 # error_msg          : Output error message
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+#
+=======
+>>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+>>>>>>> ophub-main
 # init_var           : Initialize all variables
 # show_aml_model     : Display the model list
 # set_rootfs_type    : Set the type of file system
@@ -38,6 +45,11 @@ ophub_release_file="/etc/ophub-release"
 # Set the installation file preprocessing directory
 tmp_path="/ddbr"
 #
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> ophub-main
 # Set font color
 STEPS="[\033[95m STEPS \033[0m]"
 INFO="[\033[94m INFO \033[0m]"
@@ -45,18 +57,38 @@ SUCCESS="[\033[92m SUCCESS \033[0m]"
 OPTIONS="[\033[93m OPTIONS \033[0m]"
 ERROR="[\033[91m ERROR \033[0m]"
 #
+<<<<<<< HEAD
+=======
+>>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+>>>>>>> ophub-main
 #============================================================================
 
 # Encountered a serious error, abort the script execution
 error_msg() {
+<<<<<<< HEAD
     echo -e "${ERROR} ${1}"
+=======
+<<<<<<< HEAD
+    echo -e "[\033[1;91m Error \033[0m] ${1}"
+=======
+    echo -e "${ERROR} ${1}"
+>>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+>>>>>>> ophub-main
     exit 1
 }
 
 # Initialize all variables
 init_var() {
+<<<<<<< HEAD
     echo -e "${STEPS} Start initializing the environment..."
 
+=======
+<<<<<<< HEAD
+=======
+    echo -e "${STEPS} Start initializing the environment..."
+
+>>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+>>>>>>> ophub-main
     # Specify whether to brush into the mainline u-boot, such as: yes
     [[ "${1}" == "no" ]] && auto_mainline_uboot="no"
 
@@ -68,9 +100,21 @@ init_var() {
 
     # Find emmc disk
     install_emmc="$(lsblk -l -o NAME | grep -oE '(mmcblk[0-9]?boot0)' | sed "s/boot0//g")"
+<<<<<<< HEAD
     [[ -z "${install_emmc}" ]] && error_msg "No emmc can be found to install the armbian system!"
     DEV_EMMC="/dev/${install_emmc}"
     echo -e "${INFO} DEV_EMMC: [ ${DEV_EMMC} ]"
+=======
+<<<<<<< HEAD
+    [[ "${install_emmc}" == "" ]] && error_msg "No emmc can be found to install the armbian system!"
+    DEV_EMMC="/dev/${install_emmc}"
+    echo "DEV_EMMC: ${DEV_EMMC}"
+=======
+    [[ -z "${install_emmc}" ]] && error_msg "No emmc can be found to install the armbian system!"
+    DEV_EMMC="/dev/${install_emmc}"
+    echo -e "${INFO} DEV_EMMC: [ ${DEV_EMMC} ]"
+>>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+>>>>>>> ophub-main
 
     # Create a file preprocessing directory
     DIR_INSTALL="${tmp_path}/install"
@@ -102,16 +146,33 @@ search_aml_model() {
 # Explain:   1.ID  2.MODEL  3.SOC  4.FDTFILE  5.UBOOT_OVERLOAD  6.MAINLINE_UBOOT  7.ANDROID_UBOOT
 # Example:   402:Beelink GT-King Pro:s922x:meson-g12b-gtking-pro.dtb:u-boot-gtkingpro.bin:/usr/lib/u-boot/gtkingpro-u-boot.bin.sd.bin:NA
 show_aml_model() {
+<<<<<<< HEAD
     echo -e "${STEPS} Start selecting device..."
 
+=======
+<<<<<<< HEAD
+=======
+    echo -e "${STEPS} Start selecting device..."
+
+>>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+>>>>>>> ophub-main
     printf "%-s\n" "--------------------------------------------------------------------------------------"
     printf "%-5s %-10s %-30s %-50s\n" ID SOC MODEL DTB
     printf "%-s\n" "--------------------------------------------------------------------------------------"
     printf "%-5s %-10s %-30s %-50s\n" $(echo "${model_database}" | grep -E "^[0-9]{1,9}.*:" | sed -e 's/[ ][ ]*/-/g' | awk -F ':' '{print $1,$3,$2,$4}')
     printf "%-s\n" "--------------------------------------------------------------------------------------"
 
+<<<<<<< HEAD
     echo -ne "${OPTIONS} Please Input ID: "
     read boxid
+=======
+<<<<<<< HEAD
+    read -p "Please Input ID: " boxid
+=======
+    echo -ne "${OPTIONS} Please Input ID: "
+    read boxid
+>>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+>>>>>>> ophub-main
     if [[ "${boxid}" -eq "0" ]]; then
         read -p "Please Input SoC Name: " AMLOGIC_SOC
         AMLOGIC_SOC="${AMLOGIC_SOC}"
@@ -129,7 +190,15 @@ show_aml_model() {
         ANDROID_UBOOT="${ANDROID_UBOOT}"
     else
         ret="$(search_aml_model "${boxid}")"
+<<<<<<< HEAD
         [[ -z "${ret}" ]] && error_msg "Input error, exit!"
+=======
+<<<<<<< HEAD
+        [[ "${ret}" == "" ]] && error_msg "Input error, exit!"
+=======
+        [[ -z "${ret}" ]] && error_msg "Input error, exit!"
+>>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+>>>>>>> ophub-main
 
         AMLOGIC_SOC="$(echo "${ret}" | awk -F ':' '{print $3}')"
         FDTFILE="$(echo "${ret}" | awk -F ':' '{print $4}')"
@@ -138,10 +207,23 @@ show_aml_model() {
         ANDROID_UBOOT="$(echo "${ret}" | awk -F ':' '{print $7}')"
     fi
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+    echo "Input Box ID: [ ${boxid} ]"
+    echo "FDTFILE: [ ${FDTFILE} ]"
+    echo "UBOOT_OVERLOAD: [ ${UBOOT_OVERLOAD} ]"
+    echo "K510: [ ${K510} ]"
+=======
+>>>>>>> ophub-main
     echo -e "${INFO} Input Box ID: [ ${boxid} ]"
     echo -e "${INFO} FDTFILE: [ ${FDTFILE} ]"
     echo -e "${INFO} UBOOT_OVERLOAD: [ ${UBOOT_OVERLOAD} ]"
     echo -e "${INFO} K510: [ ${K510} ]"
+<<<<<<< HEAD
+=======
+>>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+>>>>>>> ophub-main
 
     # Check dtb file
     [[ -n "${FDTFILE}" && -f "/boot/dtb/amlogic/${FDTFILE}" ]] || error_msg "The DTB is missing, stop the install."
@@ -154,6 +236,20 @@ show_aml_model() {
 
 # Set the type of file system
 set_rootfs_type() {
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+    cat <<EOF
+--------------------------------------------
+Please select the type of file system:
+1. ext4
+2. btrfs
+--------------------------------------------
+EOF
+    read -p "Please Input ID: " filetype
+    if [[ "${filetype}" -eq "2" ]]; then
+=======
+>>>>>>> ophub-main
     echo -e "${STEPS} Start selecting file system type..."
     cat <<EOF
 -----------------------------------------------
@@ -166,6 +262,10 @@ EOF
     echo -ne "${OPTIONS} Please Input ID: "
     read filetype
     if [[ "${filetype}" -eq "2" || "${filetype}" == "btrfs" ]]; then
+<<<<<<< HEAD
+=======
+>>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+>>>>>>> ophub-main
         file_system_type="btrfs"
         uenv_mount_string="UUID=${ROOTFS_UUID} rootflags=compress=zstd:6 rootfstype=btrfs"
         fstab_mount_string="defaults,noatime,compress=zstd:6"
@@ -174,14 +274,31 @@ EOF
         uenv_mount_string="UUID=${ROOTFS_UUID} rootflags=data=writeback rw rootfstype=ext4"
         fstab_mount_string="defaults,noatime,errors=remount-ro"
     fi
+<<<<<<< HEAD
     echo -e "${INFO} Input Type ID: [ ${filetype} ]"
     echo -e "${INFO} The type of file system: [ ${file_system_type} ]"
+=======
+<<<<<<< HEAD
+    echo "Input Type ID: [ ${filetype} ]"
+    echo "The type of file system: [ ${file_system_type} ]"
+=======
+    echo -e "${INFO} Input Type ID: [ ${filetype} ]"
+    echo -e "${INFO} The type of file system: [ ${file_system_type} ]"
+>>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+>>>>>>> ophub-main
 }
 
 # Create emmc partition
 create_partition() {
     cd /
+<<<<<<< HEAD
     echo -e "${STEPS} Start creating eMMC partition..."
+=======
+<<<<<<< HEAD
+=======
+    echo -e "${STEPS} Start creating eMMC partition..."
+>>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+>>>>>>> ophub-main
 
     # Disable the system's partition adjustment service
     systemctl stop armbian-resize-filesystem.service
@@ -191,7 +308,15 @@ create_partition() {
     [[ -d "/usr/lib/u-boot" ]] || mkdir -p /usr/lib/u-boot
     MYBOX_UBOOT="/usr/lib/u-boot/mybox-bootloader.img"
     if [[ ! -f "${MYBOX_UBOOT}" ]]; then
+<<<<<<< HEAD
         echo -e "${INFO} Start backup default bootloader."
+=======
+<<<<<<< HEAD
+        echo "Start backup default bootloader"
+=======
+        echo -e "${INFO} Start backup default bootloader."
+>>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+>>>>>>> ophub-main
         dd if="${DEV_EMMC}" of=${MYBOX_UBOOT} bs=1M count=4 conv=fsync
     fi
     sync
@@ -208,7 +333,15 @@ create_partition() {
     dd if=/dev/zero of=${DEV_EMMC} bs=512 count=1 conv=fsync
     sync
 
+<<<<<<< HEAD
     # Set partition size (Unit: MiB)
+=======
+<<<<<<< HEAD
+    # Set partition size(MB)
+=======
+    # Set partition size (Unit: MiB)
+>>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+>>>>>>> ophub-main
     if [[ "${AMLOGIC_SOC}" == "s912" || "${AMLOGIC_SOC}" == "s905d" ]]; then
         BLANK1="68"
         BOOT="512"
@@ -223,12 +356,27 @@ create_partition() {
         BLANK2="0"
     else
         BLANK1="68"
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+        BOOT="256"    # A total of [ 1120MB ] can be used in this block, and the remaining [ 864MB ] can be used.
+        BLANK2="1026" # Can set the rootfs partition after [ 1350MB ] of the total disk.
+    fi
+
+    # Format emmc disk
+    echo "Start create MBR and partittion"
+=======
+>>>>>>> ophub-main
         BOOT="256"    # A total of [ 1120MiB ] can be used in this block, and the remaining [ 864MiB ] can be used.
         BLANK2="1026" # Can set the rootfs partition after [ 1350MiB ] of the total disk.
     fi
 
     # Format emmc disk
     echo -e "${INFO} Start create MBR and partittion."
+<<<<<<< HEAD
+=======
+>>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+>>>>>>> ophub-main
     parted -s "${DEV_EMMC}" mklabel msdos 2>/dev/null
     parted -s "${DEV_EMMC}" mkpart primary fat32 $((BLANK1))MiB $((BLANK1 + BOOT - 1))MiB 2>/dev/null
     parted -s "${DEV_EMMC}" mkpart primary ${file_system_type} $((BLANK1 + BOOT + BLANK2))MiB 100% 2>/dev/null
@@ -236,6 +384,20 @@ create_partition() {
 
     # Write bootloader
     if [[ -n "${MAINLINE_UBOOT}" && -f "${MAINLINE_UBOOT}" && "${auto_mainline_uboot}" == "yes" ]]; then
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+        echo "Write Mainline bootloader: [ ${MAINLINE_UBOOT} ]"
+        dd if="${MAINLINE_UBOOT}" of="${DEV_EMMC}" bs=1 count=444 conv=fsync
+        dd if="${MAINLINE_UBOOT}" of="${DEV_EMMC}" bs=512 skip=1 seek=1 conv=fsync
+    elif [[ -n "${ANDROID_UBOOT}" && -f "${ANDROID_UBOOT}" ]]; then
+        echo "Write Android bootloader: [ ${ANDROID_UBOOT} ]"
+        dd if="${ANDROID_UBOOT}" of="${DEV_EMMC}" bs=1 count=444 conv=fsync
+        dd if="${ANDROID_UBOOT}" of="${DEV_EMMC}" bs=512 skip=1 seek=1 conv=fsync
+    elif [[ -n "${MYBOX_UBOOT}" && -f "${MYBOX_UBOOT}" ]]; then
+        echo "Restore the mybox u-boot"
+=======
+>>>>>>> ophub-main
         echo -e "${INFO} Write Mainline bootloader: [ ${MAINLINE_UBOOT} ]"
         dd if="${MAINLINE_UBOOT}" of="${DEV_EMMC}" bs=1 count=444 conv=fsync
         dd if="${MAINLINE_UBOOT}" of="${DEV_EMMC}" bs=512 skip=1 seek=1 conv=fsync
@@ -245,6 +407,10 @@ create_partition() {
         dd if="${ANDROID_UBOOT}" of="${DEV_EMMC}" bs=512 skip=1 seek=1 conv=fsync
     elif [[ -n "${MYBOX_UBOOT}" && -f "${MYBOX_UBOOT}" ]]; then
         echo -e "${INFO} Restore the mybox bootloader: [ ${MYBOX_UBOOT} ]"
+<<<<<<< HEAD
+=======
+>>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+>>>>>>> ophub-main
         dd if=${MYBOX_UBOOT} of="${DEV_EMMC}" conv=fsync bs=1 count=442
         dd if=${MYBOX_UBOOT} of="${DEV_EMMC}" conv=fsync bs=512 skip=1 seek=1
     fi
@@ -253,25 +419,59 @@ create_partition() {
 # Copy bootfs partition files
 copy_bootfs() {
     cd /
+<<<<<<< HEAD
     echo -e "${STEPS} Start processing the bootfs partition..."
+=======
+<<<<<<< HEAD
+=======
+    echo -e "${STEPS} Start processing the bootfs partition..."
+>>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+>>>>>>> ophub-main
 
     PART_BOOT="${DEV_EMMC}p1"
 
     if grep -q ${PART_BOOT} /proc/mounts; then
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+        echo "Unmounting BOOT partiton."
+        umount -f ${PART_BOOT}
+    fi
+    echo "Formatting BOOTFS partition..."
+=======
+>>>>>>> ophub-main
         echo -e "${INFO} Unmounting BOOT partiton."
         umount -f ${PART_BOOT}
     fi
     echo -e "${INFO} Formatting BOOTFS partition."
+<<<<<<< HEAD
+=======
+>>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+>>>>>>> ophub-main
     mkfs.vfat -n "BOOT_EMMC" ${PART_BOOT}
 
     mount -o rw ${PART_BOOT} ${DIR_INSTALL}
     [[ "$?" -ne "0" ]] && error_msg "Failed to mount BOOTFS partition"
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+    echo "Start copy BOOTFS partition data..."
+    cp -rf /boot/* ${DIR_INSTALL} && sync
+    rm -rf ${DIR_INSTALL}/'System Volume Information' 2>/dev/null
+
+    echo "Generate the new uEnv.txt file."
+=======
+>>>>>>> ophub-main
     echo -e "${INFO} Start copy BOOTFS partition data."
     cp -rf /boot/* ${DIR_INSTALL} && sync
     rm -rf ${DIR_INSTALL}/'System Volume Information' 2>/dev/null
 
     echo -e "${INFO} Generate the new uEnv.txt file."
+<<<<<<< HEAD
+=======
+>>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+>>>>>>> ophub-main
     rm -f ${DIR_INSTALL}/uEnv.txt && sync
     cat >${DIR_INSTALL}/uEnv.txt <<EOF
 LINUX=/zImage
@@ -282,7 +482,15 @@ EOF
 
     # If the [ /boot/extlinux/extlinux.conf ] file exists, create a new one.
     if [[ -f "${DIR_INSTALL}/extlinux/extlinux.conf" ]]; then
+<<<<<<< HEAD
         echo -e "${INFO} Generate the new extlinux.conf file."
+=======
+<<<<<<< HEAD
+        echo "Generate the new extlinux.conf file."
+=======
+        echo -e "${INFO} Generate the new extlinux.conf file."
+>>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+>>>>>>> ophub-main
         rm -rf ${DIR_INSTALL}/extlinux && sync
         mkdir -p ${DIR_INSTALL}/extlinux
         cat >${DIR_INSTALL}/extlinux/extlinux.conf <<EOF
@@ -305,7 +513,15 @@ EOF
 
     # Copy u-boot.ext and u-boot.emmc
     if [[ "${K510}" -eq "1" && -n "${UBOOT_OVERLOAD}" && -f "${DIR_INSTALL}/${UBOOT_OVERLOAD}" ]]; then
+<<<<<<< HEAD
         echo -e "${INFO} Copy [ ${UBOOT_OVERLOAD} ] to u-boot.emmc"
+=======
+<<<<<<< HEAD
+        echo "Copy [ ${UBOOT_OVERLOAD} ] to u-boot.emmc"
+=======
+        echo -e "${INFO} Copy [ ${UBOOT_OVERLOAD} ] to u-boot.emmc"
+>>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+>>>>>>> ophub-main
         if [ -f "${DIR_INSTALL}/u-boot.ext" ]; then
             cp -f ${DIR_INSTALL}/u-boot.ext ${DIR_INSTALL}/u-boot.emmc
         else
@@ -316,6 +532,13 @@ EOF
         chmod +x ${DIR_INSTALL}/u-boot.emmc
     fi
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+    echo "BOOTFS partition processing completed."
+=======
+>>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+>>>>>>> ophub-main
     sync && sleep 3
     umount ${DIR_INSTALL}
 }
@@ -323,16 +546,37 @@ EOF
 # Copy rootfs partition files
 copy_rootfs() {
     cd /
+<<<<<<< HEAD
     echo -e "${STEPS} Start processing the rootfs partition..."
+=======
+<<<<<<< HEAD
+=======
+    echo -e "${STEPS} Start processing the rootfs partition..."
+>>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+>>>>>>> ophub-main
 
     PART_ROOT="${DEV_EMMC}p2"
 
     if grep -q ${PART_ROOT} /proc/mounts; then
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+        echo "Unmounting ROOT partiton."
+        umount -f ${PART_ROOT}
+    fi
+
+    echo "Formatting ROOTFS partition..."
+=======
+>>>>>>> ophub-main
         echo -e "${INFO} Unmounting ROOT partiton."
         umount -f ${PART_ROOT}
     fi
 
     echo -e "${INFO} Formatting ROOTFS partition."
+<<<<<<< HEAD
+=======
+>>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+>>>>>>> ophub-main
     if [[ "${file_system_type}" == "btrfs" ]]; then
         mkfs.btrfs -f -U ${ROOTFS_UUID} -L "ROOTFS_EMMC" -m single ${PART_ROOT}
         sleep 3
@@ -344,13 +588,29 @@ copy_rootfs() {
     fi
     [[ "$?" -ne "0" ]] && error_msg "Failed to mount ROOTFS partition"
 
+<<<<<<< HEAD
     echo -e "${INFO} Start copy ROOTFS partition data."
+=======
+<<<<<<< HEAD
+    echo "Start copy ROOTFS partition data..."
+=======
+    echo -e "${INFO} Start copy ROOTFS partition data."
+>>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+>>>>>>> ophub-main
     # Create relevant directories
     mkdir -p ${DIR_INSTALL}/{boot/,dev/,media/,mnt/,proc/,run/,sys/} && sync
     # Copy the relevant directory
     COPY_SRC="etc home lib64 opt root selinux srv usr var"
     for src in ${COPY_SRC}; do
+<<<<<<< HEAD
         echo -e "${INFO} Copy the [ ${src} ] directory."
+=======
+<<<<<<< HEAD
+        echo "copy [ ${src} ]..."
+=======
+        echo -e "${INFO} Copy the [ ${src} ] directory."
+>>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+>>>>>>> ophub-main
         tar -cf - ${src} | (
             cd ${DIR_INSTALL}
             tar -xf -
@@ -364,7 +624,15 @@ copy_rootfs() {
     ln -sf /var/tmp ${DIR_INSTALL}/tmp
     sync
 
+<<<<<<< HEAD
     echo -e "${INFO} Generate the new fstab file."
+=======
+<<<<<<< HEAD
+    echo "Generate the new fstab file."
+=======
+    echo -e "${INFO} Generate the new fstab file."
+>>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+>>>>>>> ophub-main
     rm -f ${DIR_INSTALL}/etc/fstab 2>/dev/null && sync
     cat >${DIR_INSTALL}/etc/fstab <<EOF
 UUID=${ROOTFS_UUID}  /        ${file_system_type}     ${fstab_mount_string}     0 1
@@ -373,7 +641,15 @@ tmpfs                /tmp     tmpfs                   defaults,nosuid           
 
 EOF
 
+<<<<<<< HEAD
     echo -e "${INFO} Update the relevant parameters."
+=======
+<<<<<<< HEAD
+    echo "Update the relevant parameters"
+=======
+    echo -e "${INFO} Update the relevant parameters."
+>>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+>>>>>>> ophub-main
     ophub_release_file="${DIR_INSTALL}${ophub_release_file}"
     #
     sed -i '/FDTFILE/d' ${ophub_release_file} 2>/dev/null
@@ -399,11 +675,26 @@ EOF
 
     rm -f ${DIR_INSTALL}/usr/sbin/armbian-tf 2>/dev/null
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+    echo "ROOTFS partition processing completed."
+=======
+>>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+>>>>>>> ophub-main
     sync && sleep 3
     umount ${DIR_INSTALL}
 }
 
+<<<<<<< HEAD
 echo -e "${STEPS} Start install armbian to emmc..."
+=======
+<<<<<<< HEAD
+echo "Start install armbian to emmc..."
+=======
+echo -e "${STEPS} Start install armbian to emmc..."
+>>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+>>>>>>> ophub-main
 #
 # Check script permission
 [[ "$(id -u)" == "0" ]] || error_msg "please run this script as root: [ sudo $0 ]"
@@ -420,5 +711,15 @@ copy_bootfs
 # Copy rootfs partition files
 copy_rootfs
 #
+<<<<<<< HEAD
 echo -e "${SUCCESS} Successful installed, please unplug the USB, re-insert the power supply to start the armbian."
+=======
+<<<<<<< HEAD
+echo "*************************************************************************************************"
+echo "Successful installed, please unplug the USB, re-insert the power supply to start the armbian."
+echo "*************************************************************************************************"
+=======
+echo -e "${SUCCESS} Successful installed, please unplug the USB, re-insert the power supply to start the armbian."
+>>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+>>>>>>> ophub-main
 exit 0

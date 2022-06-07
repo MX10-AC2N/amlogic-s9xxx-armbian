@@ -10,6 +10,28 @@ on:
   workflow_dispatch:
     inputs:
       armbian_url:
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+        description: "Input armbian path"
+        required: false
+        default: ""
+      armbian_soc:
+        description: "Input armbian soc"
+        required: false
+        default: "s905x3_s905d"
+      armbian_kernel:
+        description: "Input armbian kernel"
+        required: false
+        default: "5.15.25_5.10.100"
+      armbian_size:
+        description: "Input armbian size"
+        required: false
+        default: "2748"
+      armbian_fstype:
+        description: "Input rootfs type: [ ext4 / btrfs ]"
+=======
+>>>>>>> ophub-main
         description: "Set armbian path."
         required: false
         default: ""
@@ -27,6 +49,10 @@ on:
         default: "2748"
       armbian_fstype:
         description: "Set armbian rootfs type: ext4 / btrfs"
+<<<<<<< HEAD
+=======
+>>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+>>>>>>> ophub-main
         required: false
         default: "ext4"
 

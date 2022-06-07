@@ -44,6 +44,11 @@ ophub_release_file="/etc/ophub-release"
 # Set default installation mainline u-boot
 auto_mainline_uboot="yes"
 #
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> ophub-main
 # Set font color
 STEPS="[\033[95m STEPS \033[0m]"
 INFO="[\033[94m INFO \033[0m]"
@@ -51,26 +56,58 @@ SUCCESS="[\033[92m SUCCESS \033[0m]"
 FINISH="[\033[93m FINISH \033[0m]"
 ERROR="[\033[91m ERROR \033[0m]"
 #
+<<<<<<< HEAD
+=======
+>>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+>>>>>>> ophub-main
 #==================================================================================================
 
 # Encountered a serious error, abort the script execution
 error_msg() {
+<<<<<<< HEAD
     echo -e "${ERROR} ${1}"
+=======
+<<<<<<< HEAD
+    echo -e "[\033[1;91m Error \033[0m] ${1}"
+=======
+    echo -e "${ERROR} ${1}"
+>>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+>>>>>>> ophub-main
     exit 1
 }
 
 # Check dependencies
 check_depends() {
+<<<<<<< HEAD
     is_missing="0"
     necessary_packages=("subversion" "tar" "coreutils")
     i="1"
+=======
+<<<<<<< HEAD
+    i="1"
+    is_missing="0"
+    necessary_packages=("subversion" "tar" "coreutils")
+=======
+    is_missing="0"
+    necessary_packages=("subversion" "tar" "coreutils")
+    i="1"
+>>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+>>>>>>> ophub-main
     for package in ${necessary_packages[*]}; do
         [[ -n "$(dpkg-query -l | grep "${package}")" ]] || is_missing="1"
         let i++
     done
 
     if [[ "${is_missing}" -eq "1" ]]; then
+<<<<<<< HEAD
         echo -e "${STEPS} Start installing the necessary dependencies..."
+=======
+<<<<<<< HEAD
+        echo -e "Start installing the necessary dependencies..."
+=======
+        echo -e "${STEPS} Start installing the necessary dependencies..."
+>>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+>>>>>>> ophub-main
         sudo apt-get update
         sudo apt-get install -y ${necessary_packages[*]}
     fi
@@ -93,7 +130,14 @@ get_textoffset() {
 # Initialize all variables
 init_var() {
     cd ${tmp_path}
+<<<<<<< HEAD
     echo -e "${STEPS} Start initializing the environment..."
+=======
+<<<<<<< HEAD
+=======
+    echo -e "${STEPS} Start initializing the environment..."
+>>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+>>>>>>> ophub-main
 
     # Specify the kernel, such as: 5.10.70
     [[ -n "${1}" ]] && inputs_kernel="${1}"
@@ -105,7 +149,15 @@ init_var() {
     [[ "${3}" == "no" ]] && auto_mainline_uboot="no"
 
     # Convert kernel library address to svn format
+<<<<<<< HEAD
     [[ "${kernel_repo}" == http* && -n "$(echo "${kernel_repo}" | grep "tree/main")" ]] && kernel_repo="${kernel_repo//tree\/main/trunk}"
+=======
+<<<<<<< HEAD
+    [[ "${kernel_repo}" == http* && $(echo "${kernel_repo}" | grep "tree/main") != "" ]] && kernel_repo="${kernel_repo//tree\/main/trunk}"
+=======
+    [[ "${kernel_repo}" == http* && -n "$(echo "${kernel_repo}" | grep "tree/main")" ]] && kernel_repo="${kernel_repo//tree\/main/trunk}"
+>>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+>>>>>>> ophub-main
     kernel_repo="${kernel_repo}/${version_branch}"
 
     # Convert kernel library address to API format
@@ -149,7 +201,15 @@ download_kernel() {
     # The local kernel file is preferred, followed by the specified version, and finally the latest version of the same series is used
     if [[ "$(ls *.tar.gz -l 2>/dev/null | grep "^-" | wc -l)" -ge "4" ]]; then
         try_boot="$(ls boot-*.tar.gz 2>/dev/null | head -n 1 | grep -oE '[1-9].[0-9]{1,3}.[0-9]+')"
+<<<<<<< HEAD
         [[ -n "${try_boot}" ]] && inputs_kernel="${try_boot}" && echo -e "${STEPS} Use local kernel files: ${inputs_kernel}"
+=======
+<<<<<<< HEAD
+        [[ -n "${try_boot}" ]] && inputs_kernel="${try_boot}" && echo -e "Use local kernel files: ${inputs_kernel}"
+=======
+        [[ -n "${try_boot}" ]] && inputs_kernel="${try_boot}" && echo -e "${STEPS} Use local kernel files: ${inputs_kernel}"
+>>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+>>>>>>> ophub-main
     else
         # Query the current version
         current_kernel="$(echo "$(uname -r)" | grep -oE '^[1-9].[0-9]{1,3}.[0-9]+')"
@@ -162,18 +222,45 @@ download_kernel() {
             latest_version="$(curl -s "${kernel_api}" | grep "name" | grep -oE "${kernel_verpatch}.[0-9]+" | sed -e "s/${kernel_verpatch}.//g" | sort -n | sed -n '$p')"
             #latest_version="160"
             [[ ! -z "${latest_version}" ]] || error_msg "Failed to get the version on the server."
+<<<<<<< HEAD
             echo -e "${INFO} current version: ${current_kernel}, Latest version: ${kernel_verpatch}.${latest_version}"
+=======
+<<<<<<< HEAD
+            echo -e "current version: ${current_kernel}, Latest version: ${kernel_verpatch}.${latest_version}"
+=======
+            echo -e "${INFO} current version: ${current_kernel}, Latest version: ${kernel_verpatch}.${latest_version}"
+>>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+>>>>>>> ophub-main
             inputs_kernel="${kernel_verpatch}.${latest_version}"
         fi
 
         # version comparison
+<<<<<<< HEAD
         [[ "${current_kernel}" == "${inputs_kernel}" ]] && echo -e "${FINISH} Already the latest version, no need to update." && exit 0
+=======
+<<<<<<< HEAD
+        if [[ "${current_kernel}" == "${inputs_kernel}" ]]; then
+            echo -e "Already the latest version, no need to update."
+            exit 1
+        fi
+=======
+        [[ "${current_kernel}" == "${inputs_kernel}" ]] && echo -e "${FINISH} Already the latest version, no need to update." && exit 0
+>>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+>>>>>>> ophub-main
 
         # Delete tmp files
         rm -f *${inputs_kernel}*.tar.gz sha256sums 2>/dev/null && sync
 
         # Download kernel
+<<<<<<< HEAD
         echo -e "${STEPS} Start downloading the kernel from [ ${kernel_repo/trunk/tree\/main}/${inputs_kernel} ]..."
+=======
+<<<<<<< HEAD
+        echo -e "Start downloading the kernel from [ ${kernel_repo/trunk/tree\/main}/${inputs_kernel} ]..."
+=======
+        echo -e "${STEPS} Start downloading the kernel from [ ${kernel_repo/trunk/tree\/main}/${inputs_kernel} ]..."
+>>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+>>>>>>> ophub-main
         svn export ${kernel_repo}/${inputs_kernel} ${tmp_path} --force
         [[ "${?}" -ne "0" ]] && error_msg "Kernel download failed."
     fi
@@ -184,17 +271,38 @@ download_kernel() {
 # Check kernel files list
 check_kernel() {
     cd ${tmp_path}
+<<<<<<< HEAD
     echo -e "${STEPS} Start checking the kernel..."
+=======
+<<<<<<< HEAD
+=======
+    echo -e "${STEPS} Start checking the kernel..."
+>>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+>>>>>>> ophub-main
 
     # Determine custom kernel filename
     kernel_boot="$(ls boot-${inputs_kernel}-*.tar.gz | head -n 1)"
     kernel_name="${kernel_boot/boot-/}" && kernel_name="${kernel_name/.tar.gz/}"
     KERNEL_VERSION="$(echo ${kernel_name} | grep -oE '^[1-9].[0-9]{1,3}.[0-9]+')"
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+    echo -e "Kernel name: ${kernel_name}"
+
+    # Check if the file is added with TEXT_OFFSET patch
+    get_textoffset "${tmp_path}/${kernel_boot}" "vmlinuz-${kernel_name}"
+    echo -e "K510 [ ${K510} ]"
+=======
+>>>>>>> ophub-main
     echo -e "${INFO} Kernel name: [ ${kernel_name} ]"
 
     # Check if the file is added with TEXT_OFFSET patch
     get_textoffset "${tmp_path}/${kernel_boot}" "vmlinuz-${kernel_name}"
     echo -e "${INFO} K510: [ ${K510} ]"
+<<<<<<< HEAD
+=======
+>>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+>>>>>>> ophub-main
     if [[ "${K510}" -eq "1" ]]; then
         [[ -n "${UBOOT_OVERLOAD}" && -f "/boot/${UBOOT_OVERLOAD}" ]] || error_msg "The UBOOT_OVERLOAD file is missing and cannot be update."
     fi
@@ -203,7 +311,15 @@ check_kernel() {
     sha256sums_file="sha256sums"
     sha256sums_check="1"
     [[ -s "${sha256sums_file}" && -n "$(cat ${sha256sums_file})" ]] || sha256sums_check="0"
+<<<<<<< HEAD
     [[ "${sha256sums_check}" -eq "1" ]] && echo -e "${INFO} Enable sha256sum checking..."
+=======
+<<<<<<< HEAD
+    [[ "${sha256sums_check}" -eq "1" ]] && echo -e "Enable sha256sum checking..."
+=======
+    [[ "${sha256sums_check}" -eq "1" ]] && echo -e "${INFO} Enable sha256sum checking..."
+>>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+>>>>>>> ophub-main
 
     # Loop check file
     kernel_list=("boot" "dtb-amlogic" "modules" "header")
@@ -218,7 +334,15 @@ check_kernel() {
             tmp_sha256sum="$(sha256sum "${tmp_file}" | awk '{print $1}')"
             tmp_checkcode="$(cat ${sha256sums_file} | grep ${tmp_file} | awk '{print $1}')"
             [[ "${tmp_sha256sum}" == "${tmp_checkcode}" ]] || error_msg "${tmp_file}: sha256sum verification failed."
+<<<<<<< HEAD
             echo -e "${INFO} (${i}/4) [ ${tmp_file} ] file sha256sum check same."
+=======
+<<<<<<< HEAD
+            echo -e "(${i}/4) [ ${tmp_file} ] file sha256sum check same."
+=======
+            echo -e "${INFO} (${i}/4) [ ${tmp_file} ] file sha256sum check same."
+>>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+>>>>>>> ophub-main
         fi
         let i++
     done
@@ -229,7 +353,16 @@ check_kernel() {
 # Update the kernel
 update_kernel() {
     cd ${tmp_path}
+<<<<<<< HEAD
     echo -e "${STEPS} Start unpacking the kernel..."
+=======
+<<<<<<< HEAD
+
+    echo -e "Start unpacking the kernel..."
+=======
+    echo -e "${STEPS} Start unpacking the kernel..."
+>>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+>>>>>>> ophub-main
 
     # 01. For /boot five files
     rm -f /boot/config-* /boot/initrd.img-* /boot/System.map-* /boot/uInitrd-* /boot/vmlinuz-* 2>/dev/null && sync
@@ -242,24 +375,56 @@ update_kernel() {
         [[ "$(sha256sum uInitrd-${kernel_name} | awk '{print $1}')" == "$(sha256sum uInitrd | awk '{print $1}')" ]] || cp -f uInitrd-${kernel_name} uInitrd
         [[ "$(sha256sum vmlinuz-${kernel_name} | awk '{print $1}')" == "$(sha256sum zImage | awk '{print $1}')" ]] || cp -f vmlinuz-${kernel_name} zImage
     )
+<<<<<<< HEAD
     echo -e "${INFO} (1/4) Unpacking [ boot-${kernel_name}.tar.gz ] done."
+=======
+<<<<<<< HEAD
+    echo -e "(1/4) Unpacking [ boot-${kernel_name}.tar.gz ] done."
+=======
+    echo -e "${INFO} (1/4) Unpacking [ boot-${kernel_name}.tar.gz ] done."
+>>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+>>>>>>> ophub-main
 
     # 02. For /boot/dtb/amlogic/*
     tar -xzf dtb-amlogic-${kernel_name}.tar.gz -C /boot/dtb/amlogic && sync
     [[ "$(ls /boot/dtb/amlogic -l 2>/dev/null | grep "^-" | wc -l)" -ge "10" ]] || error_msg "/boot/dtb/amlogic file is missing."
+<<<<<<< HEAD
     echo -e "${INFO} (2/4) Unpacking [ dtb-amlogic-${kernel_name}.tar.gz ] done."
+=======
+<<<<<<< HEAD
+    echo -e "(2/4) Unpacking [ dtb-amlogic-${kernel_name}.tar.gz ] done."
+=======
+    echo -e "${INFO} (2/4) Unpacking [ dtb-amlogic-${kernel_name}.tar.gz ] done."
+>>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+>>>>>>> ophub-main
 
     # 03. For /usr/lib/modules/*
     rm -rf /usr/lib/modules/* 2>/dev/null && sync
     tar -xzf modules-${kernel_name}.tar.gz -C /usr/lib/modules && sync
     (cd /usr/lib/modules/${kernel_name} && echo "build source" | xargs rm -f)
     [[ -d "/usr/lib/modules/${kernel_name}" ]] || error_msg "/usr/lib/modules/${kernel_name} kernel folder is missing."
+<<<<<<< HEAD
     echo -e "${INFO} (3/4) Unpacking [ modules-${kernel_name}.tar.gz ] done."
+=======
+<<<<<<< HEAD
+    echo -e "(3/4) Unpacking [ modules-${kernel_name}.tar.gz ] done."
+=======
+    echo -e "${INFO} (3/4) Unpacking [ modules-${kernel_name}.tar.gz ] done."
+>>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+>>>>>>> ophub-main
 
     # 04. For /usr/include/*
     tar -xzf header-${kernel_name}.tar.gz -C /usr && sync
     [[ -d "/usr/include" ]] || error_msg "/usr/include folder is missing."
+<<<<<<< HEAD
     echo -e "${INFO} (4/4) Unpacking [ header-${kernel_name}.tar.gz ] done."
+=======
+<<<<<<< HEAD
+    echo -e "(4/4) Unpacking [ header-${kernel_name}.tar.gz ] done."
+=======
+    echo -e "${INFO} (4/4) Unpacking [ header-${kernel_name}.tar.gz ] done."
+>>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+>>>>>>> ophub-main
 
     # Delete kernel tmpfiles
     rm -f *${kernel_name}*.tar.gz sha256sums 2>/dev/null
@@ -270,24 +435,53 @@ update_kernel() {
 # Update the uboot
 update_uboot() {
     cd ${tmp_path}
+<<<<<<< HEAD
     echo -e "${STEPS} Start updating the uboot..."
+=======
+<<<<<<< HEAD
+=======
+    echo -e "${STEPS} Start updating the uboot..."
+>>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+>>>>>>> ophub-main
 
     # Copy u-boot.ext and u-boot.emmc
     if [[ "${K510}" -eq "1" && -n "${UBOOT_OVERLOAD}" && -f "/boot/${UBOOT_OVERLOAD}" ]]; then
         [[ ! -f "/boot/u-boot.ext" ]] && cp -f "/boot/${UBOOT_OVERLOAD}" /boot/u-boot.ext && sync && chmod +x /boot/u-boot.ext
         [[ ! -f "/boot/u-boot.emmc" ]] && cp -f "/boot/u-boot.ext" /boot/u-boot.emmc && sync && chmod +x /boot/u-boot.emmc
+<<<<<<< HEAD
         echo -e "${INFO} The ${UBOOT_OVERLOAD} file copy is complete."
+=======
+<<<<<<< HEAD
+        echo -e "The ${UBOOT_OVERLOAD} file copy is complete."
+=======
+        echo -e "${INFO} The ${UBOOT_OVERLOAD} file copy is complete."
+>>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+>>>>>>> ophub-main
     elif [[ "${K510}" -eq "0" ]]; then
         rm -f "/boot/u-boot.ext" "/boot/u-boot.emmc" 2>/dev/null
     fi
 
     # Write bootloader
     if [[ -n "${MAINLINE_UBOOT}" && -f "${MAINLINE_UBOOT}" && "${auto_mainline_uboot}" == "yes" ]]; then
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+        echo -e "Write Mainline bootloader: [ ${MAINLINE_UBOOT} ]"
+        dd if="${MAINLINE_UBOOT}" of="${DEV_EMMC}" bs=1 count=444 conv=fsync
+        dd if="${MAINLINE_UBOOT}" of="${DEV_EMMC}" bs=512 skip=1 seek=1 conv=fsync
+    elif [[ -n "${ANDROID_UBOOT}" && -f "${ANDROID_UBOOT}" ]]; then
+        echo -e "Write Android bootloader: [ ${ANDROID_UBOOT} ]"
+=======
+>>>>>>> ophub-main
         echo -e "${INFO} Write Mainline bootloader: [ ${MAINLINE_UBOOT} ]"
         dd if="${MAINLINE_UBOOT}" of="${DEV_EMMC}" bs=1 count=444 conv=fsync
         dd if="${MAINLINE_UBOOT}" of="${DEV_EMMC}" bs=512 skip=1 seek=1 conv=fsync
     elif [[ -n "${ANDROID_UBOOT}" && -f "${ANDROID_UBOOT}" ]]; then
         echo -e "${INFO} Write Android bootloader: [ ${ANDROID_UBOOT} ]"
+<<<<<<< HEAD
+=======
+>>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+>>>>>>> ophub-main
         dd if="${ANDROID_UBOOT}" of="${DEV_EMMC}" bs=1 count=444 conv=fsync
         dd if="${ANDROID_UBOOT}" of="${DEV_EMMC}" bs=512 skip=1 seek=1 conv=fsync
     fi
@@ -301,7 +495,15 @@ update_uboot() {
     sync && echo ""
 }
 
+<<<<<<< HEAD
 echo -e "${STEPS} Ready to update, please wait..."
+=======
+<<<<<<< HEAD
+echo -e "Ready to update, please wait..."
+=======
+echo -e "${STEPS} Ready to update, please wait..."
+>>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+>>>>>>> ophub-main
 # Check script permission
 [[ "$(id -u)" == "0" ]] || error_msg "please run this script as root: [ sudo $0 ]"
 #
@@ -319,6 +521,14 @@ update_kernel
 update_uboot
 #
 sync && sleep 3
+<<<<<<< HEAD
 echo -e "${SUCCESS} Successfully updated, automatic restarting..."
+=======
+<<<<<<< HEAD
+echo "Successfully updated, automatic restarting..."
+=======
+echo -e "${SUCCESS} Successfully updated, automatic restarting..."
+>>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
+>>>>>>> ophub-main
 reboot
 exit 0
