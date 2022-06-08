@@ -22,25 +22,11 @@ on:
         required: false
         default: "5.15.25_5.10.100"
       armbian_size:
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-        description: "Set armbian rootfs size."
-        required: false
-        default: "2748"
-      armbian_fstype:
-        description: "Set armbian rootfs type."
-=======
->>>>>>> ophub-main
         description: "Set armbian rootfs size(Unit: MiB)."
         required: false
         default: "2748"
       armbian_fstype:
         description: "Set armbian rootfs type: ext4 / btrfs"
-<<<<<<< HEAD
-=======
->>>>>>> 09f6bd92e481a7544ad16ed08cc761e6f737be20
->>>>>>> ophub-main
         required: false
         default: "ext4"
 
