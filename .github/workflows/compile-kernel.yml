@@ -86,4 +86,7 @@ jobs:
           allowUpdates: true
           token: ${{ secrets.GH_TOKEN }}
           body: |
-            The kernel can be used to compile Armbian and OpenWrt.
+            The kernel compiled with as source ${{ env.inputs.kernel_repo }} 
+            It can be used to compile Armbian and OpenWrt.
+            
+            
