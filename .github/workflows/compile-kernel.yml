@@ -12,7 +12,7 @@ on:
       kernel_repo:
         description: "Choose to compile kernel sources"
         required: false
-        default: "unifreq"
+        default: "kernel.org"
         type: choice
         options:
           - unifreq
