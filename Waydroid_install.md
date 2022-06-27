@@ -3,11 +3,10 @@ Tested with https://github.com/MX10-AC2N/amlogic-s9xxx-armbian/releases/tag/kern
 
 Flashed on USB support.
 
-```
+```yaml
 sudo su
 apt update
-apt install gnome-session-wayland
-apt install gnome-terminal
+apt install sway waybar wofi suckless-tools sway-backgrounds foot dwm stterm surf swayidle xdg-desktop-portal-wlr fonts-font-awesome 
 apt install gdm3                  
 #apt remove lightdm xfce4
 nano /etc/gdm3/custom.conf                  #ensure WaylandEnable=false is commented
