@@ -20,13 +20,13 @@ on:
       kernel_version:
         description: "Select kernel version"
         required: false
-        default: "5.15.45"
+        default: "5.15.48"
         type: choice
         options:
           - 5.15.45_5.10.100
           - 5.15.45_5.18.1
           - 5.18.1
-          - 5.15.45
+          - 5.15.48
           - 5.10.100
           - 5.4.190
       kernel_auto:
